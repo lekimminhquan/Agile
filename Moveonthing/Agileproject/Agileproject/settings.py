@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'MOT'
+    'MOT',
+    
 ]
 
 MIDDLEWARE = [
@@ -77,10 +78,21 @@ WSGI_APPLICATION = 'Agileproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME':BASE_DIR / 'db.sqlite3',
+        'ENFORCE_SCHEMA': False,
+},
+    'mongodb':{
+        'ENGINE':'djongo',
+        'NAME':'Agile-SPM',
+        'CLIENT': {
+                'host': 'mongodb+srv://lekimminhquan:Ngan@vus2023@cluster0.yl1oy01.mongodb.net/',
+                'port':27017,
+                'username':'lekimminhquan',
+                'password':'Ngan@vus2023',
+                'authSource':'admin',
+                'authMechanism':'SCRAM-SHA-1',            } 
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
