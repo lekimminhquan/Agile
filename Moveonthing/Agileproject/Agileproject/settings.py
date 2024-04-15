@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -76,14 +77,21 @@ WSGI_APPLICATION = 'Agileproject.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pvuoltkz', # name database
-        'USER': 'pvuoltkz',
-        'PASSWORD': 'cALCFdtg-FgepPZUuefTwdb_7-Hxg1eH',
-        'HOST': 'rosie.db.elephantsql.com',
-        'PORT': '5432'  
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     },
+
+    # 'postgresql': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'pvuoltkz', # name database
+    #     'USER': 'pvuoltkz',
+    #     'PASSWORD': 'cALCFdtg-FgepPZUuefTwdb_7-Hxg1eH',
+    #     'HOST': 'rosie.db.elephantsql.com',
+    #     'PORT': '5432'  
+    # }, 
+
     'mongodb':{
         'ENGINE':'djongo',
         'NAME':'Agile-SPM',
@@ -93,7 +101,7 @@ DATABASES = {
                 'username':'lekimminhquan',
                 'password':'Ngan@vus2023',
                 'authSource':'admin',
-                'authMechanism':'SCRAM-SHA-1',            } 
+                'authMechanism':'SCRAM-SHA-1',             } 
     }
 }
 
@@ -131,8 +139,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 

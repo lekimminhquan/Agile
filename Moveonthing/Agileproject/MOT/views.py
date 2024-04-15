@@ -5,3 +5,7 @@ from django.template import loader
 def Agile (request):
     template = loader.get_template('agile.html')
     return HttpResponse(template.render())
+
+def Forgot(request):
+    template = loader.get_template('forgotPassword.html')
+    return HttpResponse(template.render())
