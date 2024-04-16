@@ -3,12 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stytesheet" href="agile.css">
-    <script src="agile.js"></script>
+    <link rel="stylesheet" href="static/homepage.css">
+    <script src="homepage.js"></script>
     <title>System Point Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <p> Hello My Team</p>
-    <a>hii</a>
+    <!--Header-->
+    <div class='container-header'>
+        <h3 class='text-header'>TRƯỜNG ĐẠI HỌC ABC</h3>
+        <p>Số 280 An Dương Vương, phường 4, quận 5, TP.HCM</p>
+        <p>Điện thoại: 0123456789</p>
+    </div>
+    <!--Sidebar-->
+    <div class="sidebar">
+        <a class="active" href="#home"><i class="fa fa-home"></i> Trang chủ</a>
+        <a href="#"><i class="fa fa-user"></i> Sinh viên</a>
+        <a href="#"><i class="fa fa-book"></i> Tổ chức thi</a>
+        <a href=""><i class="fa fa-file-text"></i> Kết quả tốt nghiệp</a>
+        <a href="{% url 'Agile' %}"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+    </div>
+    <div class="content"></div>
 </body>
 </html>
