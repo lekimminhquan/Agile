@@ -1,12 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agile</title>
-</head>
+<html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="static/agile.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <body>
-    <button>Đăng nhập</button>
-    <button>Đăng ký</button>
+
+<!-- Content will go here -->
+<nav >
+   <h1>TRƯỜNG ĐẠI HỌC ABC</h1>
+   <h2>Số 280 An Dương Vương, phường 4, quận 5,TP.HCM</h2>
+   <h2> Điện thoại: 01234567</h2>
+</nav>  
+<ul>
+  <li><a class="active" href="#home">Trang chủ</a></li>
+  <li><a href="#news">Ngành</a></li>
+  <li><a href="#contact">Hướng dẫn</a></li>
+  <a class="login" href="{% url 'Login' %}">Đăng nhập</a>
+  
+</ul>
+  
+ <div class="container" >
+   <div class="noti">
+    <i class="fa-regular fa-bell"></i>
+    <h> Thông báo mới</h>
+   </div>
+   <div class="news-container">
+    <div class="nd">
+        <a href="#">Thông báo về kế hoạch tổ chức thi học kì 2 năm 2022 - 2023</a>
+        
+    </div>
+    <div class="nd">
+        <a href="#">Thông báo phúc khảo học kỳ 1 2023-2024</a>
+        
+    </div>
+    <div class="nd">
+        <a href="#">Thông báo kế hoạch đào tạo học phần Quốc phòng – An ninh học Kì II, Năm học 2023 – 2024 cho sinh viên hệ chính quy</a>
+        
+    </div>
+    <div class="nd">
+        <a href="#">Thông báo về thời gian nộp học phí học kì 2 năm 2023 - 2024</a>
+        
+    </div>
+   </div>
+   
+ </div>
+
+   
+   
+ 
 </body>
 </html>
