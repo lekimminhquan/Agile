@@ -1,0 +1,99 @@
+body
+{
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+}
+.screen-20
+{
+    position: relative;;
+    height: 20vh;
+}
+.screen-80
+{
+    position: relative;
+    height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.header {
+    background-image: linear-gradient(to right, #e45f5f, #4b3cad);
+    color: white;
+    text-align: center;
+    position: relative;
+    align-content: space-around;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20vh;
+}
+
+.header span {
+    display: block;
+    font-size: 25px;
+    font-family: 'Noto Serif Display';
+}
+.pop-up
+{
+    height: 60%;
+    width: 35%;
+    border-width: 3px;
+    border-style: solid;
+}
+.check-role
+{
+    background-image: linear-gradient(to left, #e45f5f, #4b3cad);
+    border-bottom: 3px;
+    border-bottom-style: solid;
+    height: 25%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.check-role-item
+{
+    color: white;
+    font-size: large;
+    height: 20px;
+}
+.form-login
+{
+    height: 75%;   
+    display: grid;
+    justify-items: center; /* Căn giữa chiều ngang */
+    align-content: center;
+}
+.form-login form
+{
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+}
+.form-login label
+{
+    font-family: 'Noto Serif Display';
+    font-weight: bold;
+    font-size: small;
+}
+.form-login span
+{
+    font-family: 'Noto Serif Display';
+    font-size: small;
+}
+.form-login button
+{
+    border-radius: 15px;
+    background-image: linear-gradient(to left, #e45f5f, #4b3cad);
+    color: white;
+    font-family: 'Noto Serif Display';
+    font-weight: bold;
+    float: right;
+}
+input
+{
+    padding: 5px 5px;
+    font-size: 15px;
+    font-family: 'Noto Serif Display';
+}

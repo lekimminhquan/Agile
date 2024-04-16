@@ -9,3 +9,7 @@ def Agile (request):
 def Forgot(request):
     template = loader.get_template('forgotPassword.html')
     return HttpResponse(template.render())
+
+def Login(request):
+    template = loader.get_template('login.html')
+    return HttpResponse(template.render())
