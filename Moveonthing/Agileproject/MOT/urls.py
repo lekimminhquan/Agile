@@ -6,4 +6,5 @@ urlpatterns = [
     path('',views.Agile, name= 'Agile'),
     path('forgot',views.Forgot, name='Forgot'),
     path('login', views.Login, name= 'Login'),
+    path('homepage', views.Homepage, name='Homepage')
 ]

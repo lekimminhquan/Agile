@@ -13,3 +13,7 @@ def Forgot(request):
 def Login(request):
     template = loader.get_template('login.html')
     return HttpResponse(template.render())
+
+def Homepage(request):
+    template = loader.get_template('homepage.html')
+    return HttpResponse(template.render())
