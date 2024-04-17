@@ -108,5 +108,5 @@ input
 .button-as:active{
    box-shadow: none;
    transform: translateY(5px);
-    background: white;
+
 }
