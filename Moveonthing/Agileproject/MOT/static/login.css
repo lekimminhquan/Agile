@@ -99,7 +99,7 @@ input
 }
 .button-as {
     background-color: #4b3cad;
-    border: none;
+    display: none;
     border-radius: 4px;
     box-shadow:0 5px 0 black;
     color: #fff;
@@ -108,5 +108,4 @@ input
 .button-as:active{
    box-shadow: none;
    transform: translateY(5px);
-
 }
