@@ -98,13 +98,9 @@ input
     font-family: 'Noto Serif Display';
 }
 .button-as{
-    display: inline;
     background-color: #4b3cad;
     border-radius: 4px;
     box-shadow:0 5px 0 black;
     transition: cubic-bezier(0.47, 0, 0.745, 0.715);
 }
-.button-as:active{
-   box-shadow: none;
-   transform: translateY(5px);
-}
+
