@@ -17,3 +17,6 @@ def Login(request):
 def Homepage(request):
     template = loader.get_template('homepage.html')
     return HttpResponse(template.render())
+def Resetpass(request):
+    template = loader.get_template('resetPassword.html')
+    return HttpResponse(template.render())
