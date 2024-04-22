@@ -22,35 +22,67 @@
             <div class="pop-up">
                 <div class="check-role">
                     <div class="check-role-item">
-                        <input type="radio" name="check">
+                        <input type="radio" name="check" value="student">
                         <span><b>Sinh viên</b></span>
                     </div>
-                    <div class="check-role-item" >
-                        <input type="radio" name="check">
+                    <div class="check-role-item">
+                        <input type="radio" name="check" value="teacher">
                         <span><b>Giáo viên</b></span>
                     </div>
                     <div class="check-role-item">
-                        <input type="radio" name="check">
+                        <input type="radio" name="check" value="admin">
                         <span><b>Phòng giáo vụ</b></span>
                     </div>
                 </div>
                 <div class="form-login">
-                    <form action="get">
-                        <label for="">Tên đăng nhập:</label>
-                        <input type="text" name="" id="">
+                    <form id="loginForm" method="post">
+                        <label for="username">Tên đăng nhập:</label>
+                        <input type="text" name="username" id="username" placeholder="Tên đăng nhập">
                         <br>
-                        <label for="">Mật khẩu:</label>
-                        <input type="password" name="" id="">
+                        <label for="password">Mật khẩu:</label>
+                        <input type="password" name="password" id="password" placeholder="Mật khẩu">
                         <br>
                         <div>
-                            <input type="checkbox" name="" id="" style="float: left;">
+                            <input type="checkbox" name="remember" id="remember" style="float: left;">
                             <span>Ghi nhớ lần đăng nhập sau</span>
-                            <button class ="button-as" type="button" onclick="">Đăng nhập</button>
+                            <button class="button-as" type="button" onclick="login()">Đăng nhập</button>
                         </div>
-                    </form>                    
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        function login() {
+            const tendangnhap = document.getElementById('username').value;
+            const matkhau = document.getElementById('password').value;
+            const phanquyen = document.querySelector('').value;
+            console.log(tendangnhap + ' <br> ' + matkhau + ' <br> ' + phanquyen);
+            fetch('login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    tendangnhap: tendangnhap,
+                    matkhau: matkhau,
+                    phanquyen: phanquyen,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.href = '/home';  // Điều hướng đến trang chính
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
 </body>
 </html>
