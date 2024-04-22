@@ -22,20 +22,21 @@
             <div class="pop-up">
                 <div class="check-role">
                     <div class="check-role-item">
-                        <input type="radio" name="check" value="student">
+                        <input type="radio" name="checka" id="check" value="student" class="checkb">
                         <span><b>Sinh viên</b></span>
                     </div>
                     <div class="check-role-item">
-                        <input type="radio" name="check" value="teacher">
+                        <input type="radio" name="checka" id="check" value="teacher" class="checkb">
                         <span><b>Giáo viên</b></span>
                     </div>
                     <div class="check-role-item">
-                        <input type="radio" name="check" value="admin">
+                        <input type="radio" name="checka" id="check" value="admin" class="checkb">
                         <span><b>Phòng giáo vụ</b></span>
                     </div>
                 </div>
                 <div class="form-login">
-                    <form id="loginForm" method="post">
+                    <form id="loginForm" method="POST" action="{% url 'Login' %}">
+                        {% csrf_token %}
                         <label for="username">Tên đăng nhập:</label>
                         <input type="text" name="username" id="username" placeholder="Tên đăng nhập">
                         <br>
@@ -45,7 +46,7 @@
                         <div>
                             <input type="checkbox" name="remember" id="remember" style="float: left;">
                             <span>Ghi nhớ lần đăng nhập sau</span>
-                            <button class="button-as" type="button" onclick="login()">Đăng nhập</button>
+                            <button class="button-as" type="submit">Đăng nhập</button>
                         </div>
                     </form>
                 </div>
@@ -53,13 +54,16 @@
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         function login() {
             const tendangnhap = document.getElementById('username').value;
             const matkhau = document.getElementById('password').value;
-            const phanquyen = document.querySelector('').value;
-            console.log(tendangnhap + ' <br> ' + matkhau + ' <br> ' + phanquyen);
-            fetch('login', {
+            let phanquyen = '';
+            document.querySelectorAll('.checkb').forEach(x => {
+                if(x.checked === true)
+                    phanquyen += x.value;
+            })
+            fetch('api/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -83,6 +87,6 @@
                 console.error('Error:', error);
             });
         }
-    </script>
+    </script> -->
 </body>
 </html>
