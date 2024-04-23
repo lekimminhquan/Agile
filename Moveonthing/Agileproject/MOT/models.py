@@ -207,7 +207,7 @@ class Taikhoan(AbstractBaseUser):
     password = models.CharField(max_length=50, blank=True, null=True)
     phanquyen = models.CharField(unique=True, max_length=20, blank=True, null=True)
     last_login = models.DateTimeField(blank=True, null=True)
-    is_authenticated = models.BooleanField(blank=True, null=True)
+
     class Meta:
         managed = False
         db_table = 'taikhoan'
