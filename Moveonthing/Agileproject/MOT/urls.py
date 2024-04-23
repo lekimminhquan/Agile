@@ -8,4 +8,5 @@ urlpatterns = [
      path('reset',views.Resetpass, name='Reset'),
     path('login', views.Login, name= 'Login'),
     path('homepage', views.Homepage, name='Homepage'),
+    path('logout', views.Logout, name="Logout")
 ]
