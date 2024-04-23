@@ -20,23 +20,26 @@
         </div>
         <div class="screen-80">
             <div class="pop-up">
-                <div class="check-role">
-                    <div class="check-role-item">
-                        <input type="radio" name="checka" id="check" value="student" class="checkb">
-                        <span><b>Sinh viên</b></span>
-                    </div>
-                    <div class="check-role-item">
-                        <input type="radio" name="checka" id="check" value="teacher" class="checkb">
-                        <span><b>Giáo viên</b></span>
-                    </div>
-                    <div class="check-role-item">
-                        <input type="radio" name="checka" id="check" value="admin" class="checkb">
-                        <span><b>Phòng giáo vụ</b></span>
-                    </div>
-                </div>
+                
                 <div class="form-login">
-                    <form id="loginForm" method="POST" action="{% url 'Login' %}">
+                    <form id="loginForm" method="POST" action="login">
                         {% csrf_token %}
+
+                        <div class="check-role">
+                            <div class="check-role-item">
+                                <input type="radio" name="checka" id="check" value="student" class="checkb" required>
+                                <span><b>Sinh viên</b></span>
+                            </div>
+                            <div class="check-role-item">
+                                <input type="radio" name="checka" id="check" value="teacher" class="checkb" required>
+                                <span><b>Giáo viên</b></span>
+                            </div>
+                            <div class="check-role-item">
+                                <input type="radio" name="checka" id="check" value="admin" class="checkb" required>
+                                <span><b>Phòng giáo vụ</b></span>
+                            </div>
+                        </div>
+
                         <label for="username">Tên đăng nhập:</label>
                         <input type="text" name="username" id="username" placeholder="Tên đăng nhập">
                         <br>

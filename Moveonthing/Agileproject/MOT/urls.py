@@ -6,6 +6,6 @@ urlpatterns = [
     path('',views.Agile, name= 'Agile'),
     path('forgot',views.Forgot, name='Forgot'),
      path('reset',views.Resetpass, name='Reset'),
-    path('login', views.login_view, name= 'Login'),
+    path('login', views.Login, name= 'Login'),
     path('homepage', views.Homepage, name='Homepage'),
 ]

@@ -42,6 +42,10 @@ INSTALLED_APPS = [
     
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'Agileproject.backends.PersonalizedLoginBackend',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -81,9 +85,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'pvuoltkz', # name database
-        'USER': 'pvuoltkz',
-        'PASSWORD': 'cALCFdtg-FgepPZUuefTwdb_7-Hxg1eH',
-        'HOST': 'rosie.db.elephantsql.com',
+        'USER': 'postgres',
+        'PASSWORD': '12345678',
+        'HOST': 'localhost',
         'PORT': '5432',
     }, 
 
