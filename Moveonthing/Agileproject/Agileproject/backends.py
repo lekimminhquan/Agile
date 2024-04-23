@@ -6,10 +6,10 @@ from django.contrib.auth.hashers import *
 class PersonalizedLoginBackend(ModelBackend):
     def authenticate(self, request=None, username=None, password=None, role=None , **kwars):
         try:
-            user = Taikhoan.objects.get(tendangnhap=username)
+            user = Taikhoan.objects.get(username=username)
         except Taikhoan.DoesNotExist:
             return None
-        if user.matkhau == password and user.phanquyen == role:
+        if user.password == password and user.phanquyen == role:
             return user
         else:
             return None

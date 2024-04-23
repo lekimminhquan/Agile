@@ -2,7 +2,8 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 def Agile (request):
     template = loader.get_template('agile.html')
@@ -12,6 +13,7 @@ def Forgot(request):
     template = loader.get_template('forgotPassword.html')
     return HttpResponse(template.render())
 
+@login_required(login_url='/login')
 def Homepage(request):
     template = loader.get_template('homepage.html')
     return HttpResponse(template.render())
@@ -34,3 +36,7 @@ def Login(request):
             return render(request, 'login.html')
     else:
         return render(request, 'login.html')
+
+def Logout(request):
+    logout(request)
+    return redirect('Login')

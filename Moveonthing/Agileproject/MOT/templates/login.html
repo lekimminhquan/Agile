@@ -20,26 +20,23 @@
         </div>
         <div class="screen-80">
             <div class="pop-up">
-                
-                <div class="form-login">
-                    <form id="loginForm" method="POST" action="login">
-                        {% csrf_token %}
-
-                        <div class="check-role">
-                            <div class="check-role-item">
-                                <input type="radio" name="checka" id="check" value="student" class="checkb" required>
-                                <span><b>Sinh viên</b></span>
-                            </div>
-                            <div class="check-role-item">
-                                <input type="radio" name="checka" id="check" value="teacher" class="checkb" required>
-                                <span><b>Giáo viên</b></span>
-                            </div>
-                            <div class="check-role-item">
-                                <input type="radio" name="checka" id="check" value="admin" class="checkb" required>
-                                <span><b>Phòng giáo vụ</b></span>
-                            </div>
+                <form id="loginForm" style="height: 100%;" method="POST" action="{% url 'Login' %}">
+                    <div class="check-role">
+                        <div class="check-role-item">
+                            <input type="radio" name="checka" id="check" value="student" class="checkb">
+                            <span><b>Sinh viên</b></span>
                         </div>
-
+                        <div class="check-role-item">
+                            <input type="radio" name="checka" id="check" value="teacher" class="checkb">
+                            <span><b>Giáo viên</b></span>
+                        </div>
+                        <div class="check-role-item">
+                            <input type="radio" name="checka" id="check" value="admin" class="checkb">
+                            <span><b>Phòng giáo vụ</b></span>
+                        </div>
+                    </div>
+                    <div class="form-login">
+                        {% csrf_token %}
                         <label for="username">Tên đăng nhập:</label>
                         <input type="text" name="username" id="username" placeholder="Tên đăng nhập">
                         <br>
@@ -51,45 +48,10 @@
                             <span>Ghi nhớ lần đăng nhập sau</span>
                             <button class="button-as" type="submit">Đăng nhập</button>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
-    <!-- <script>
-        function login() {
-            const tendangnhap = document.getElementById('username').value;
-            const matkhau = document.getElementById('password').value;
-            let phanquyen = '';
-            document.querySelectorAll('.checkb').forEach(x => {
-                if(x.checked === true)
-                    phanquyen += x.value;
-            })
-            fetch('api/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    tendangnhap: tendangnhap,
-                    matkhau: matkhau,
-                    phanquyen: phanquyen,
-                }),
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-                    window.location.href = '/home';  // Điều hướng đến trang chính
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        }
-    </script> -->
 </body>
 </html>

@@ -6,7 +6,7 @@
 #   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
@@ -202,11 +202,11 @@ class Sinhvien(models.Model):
 
 class Taikhoan(models.Model):
     matk = models.AutoField(primary_key=True)
-    tendangnhap = models.CharField(max_length=50, blank=True, null=True)
-    matkhau = models.CharField(max_length=50, blank=True, null=True)
+    username = models.CharField(max_length=50, blank=True, null=True)
+    password = models.CharField(max_length=50, blank=True, null=True)
     phanquyen = models.CharField(unique=True, max_length=20, blank=True, null=True)
     last_login = models.DateTimeField(blank=True, null=True)
-    
+    is_authenticated = models.BooleanField(blank=True, null=True)
     class Meta:
         managed = False
         db_table = 'taikhoan'
