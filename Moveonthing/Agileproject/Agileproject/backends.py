@@ -15,7 +15,7 @@ class PersonalizedLoginBackend(ModelBackend):
             return None
 
     def get_user(self, user_id):
-        #This shall return the user given the id
+        
         from django.contrib.auth.models import AnonymousUser
         try:
             user = Taikhoan.objects.get(matk=user_id)

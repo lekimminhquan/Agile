@@ -2,8 +2,9 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from MOT.models import Taikhoan
 
 def Agile (request):
     template = loader.get_template('agile.html')
@@ -32,7 +33,6 @@ def Login(request):
             login(request, user)
             return redirect('Homepage') 
         else:
-
             return render(request, 'login.html')
     else:
         return render(request, 'login.html')
