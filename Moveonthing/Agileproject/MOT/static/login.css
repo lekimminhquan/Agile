@@ -62,7 +62,8 @@ body
 {
     display: flex;
     flex-direction: column;
-    width: 75%;
+    align-items: center;
+    justify-content: center;
     height: 75%;
 }
 .form-login label
@@ -84,6 +85,12 @@ body
     font-family: 'Noto Serif Display';
     font-weight: bold;
     float: right;
+}
+.form-login-inside
+{
+    display: flex;
+    flex-direction: column;
+    width: 60%;
 }
 input
 {
