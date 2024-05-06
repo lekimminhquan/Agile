@@ -1,15 +1,129 @@
-body
-{
-    display: block;
-    justify-content: center;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .header-container {
+    background-color: white; /* Màu nền đen */
+    color: black; /* Màu chữ trắng */
+    padding: 5px; /* Khoảng cách lề cho header */
+    height: auto;
+  }
+  .logo-container {
+    position: absolute;
+    top: 0;
+    left: 6%;
+    width: 100px;
+    height: auto;
+    clip-path: polygon(0 0, 100% 0, 100% 70%, 50% 100%, 0% 70%);
+    z-index: 2;
+    background-color: #760504;
+  }
+  
+  .logo {
+    width: 100%;
+    height: auto;
+    
+  }
+  
+  .header-top {
+    display: flex; /* Sử dụng flexbox để căn chỉnh phần tử con */
+    justify-content: space-between; /* Căn chỉnh các phần tử con theo chiều ngang, cách xa nhau */
+    align-items: center; /* Căn chỉnh các phần tử con theo chiều dọc, căn giữa */
+    height: 40px;
+  }
+  
+  .title {
+    font-size: 16px; /* Kích thước chữ cho tiêu đề */
+    font-weight: bold;
+    margin-left: calc(6% + 100px + 10px); /* Khoảng cách là 6% + chiều rộng logo + 10px */
+  
+  }
+  
+  .sub-title {
+    margin-left: auto;
+  }
+  .sub-title i {
+    color: #000;
+    width: 20px;
+    margin-right: 10px; /* Khoảng cách giữa các biểu tượng */
+  }
+  
+  .sub-title i:hover {
+    color:#e45f5f; /* Màu khi di chuột qua */
+  }
+/* Menu */
+.menu {
+    list-style-type: none;
+    margin: 0;
+    width: 100%;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.9); /* Màu nền trắng khi rê chuột vào */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.5); /* Đổ bóng */
+    display: flex;
+    justify-content: space-between; /* Canh giữa menu */
     align-items: center;
-    margin: 0px;
+    position: absolute; /* Để menu đè lên phần picture */
+    z-index: 1; /* Đảm bảo menu đè lên phần picture */
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển đổi màu nền */
+  }
+  
+  .menu li {
+    margin: 0 10px; /* Khoảng cách giữa các mục menu */
+    font-weight: bold;
+  }
+  
+  .menu li a {
+    display: block;
+    color: #000; /* Màu chữ đen */
+    text-decoration: none;
+    padding: 10px 20px; /* Khoảng cách giữa các mục */
+    font-family: 'Roboto', sans-serif; /* Chọn font chữ đẹp */
+    transition: all 0.3s ease; /* Hiệu ứng hover mềm mại */
+  }
+  
+  .menu li a:hover {
+    color: #ff4d4d; /* Màu chữ đỏ khi hover */
+    background-color: rgba(255, 255, 255, 0.2); /* Màu nền nhẹ khi hover */
+  }
+  
+  .menu li a.active {
+    color: #ff4d4d; /* Màu chữ đỏ khi mục được chọn */
+  }
+/* Login icon */
+.menu input {
+    width: 300px;
+    padding: 10px 40px 10px 10px;
+    border: none;
+    background-color: #f5f5f5;
+    background-image: url(./images/iconsearch.png);
+    /* tránh ảnh lặp lại */
+    background-repeat: no-repeat; 
+	  background-position: left 10px center;
+	  background-size: 15px 15px; /* Kích thước của biểu tượng */
+    font-size: 14px;
+    color: #333;
+    padding-left: 30px;
+    font-style: italic;
 }
-.screen-20
-{
-    position: relative;;
-    height: 20vh;
+  .login{
+    border: none;
+    padding: 0;
+    text-decoration: none;
+    font-weight: bold;
+    color: #760504  ;
 }
+
+  
+  /* ngkhac */
+/* 
 .screen-80
 {
     position: relative;
@@ -124,4 +238,140 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+} */
+/* Reset form styles */
+/* Reset form styles */
+input[type="text"],
+input[type="password"],
+button {
+    width: calc(100% - 24px); /* Để tránh tràn dòng */
+    padding: 12px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: box-shadow 0.3s ease; /* Hiệu ứng hover */
+    color: #333;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+button:hover {
+    box-shadow: 0 0 5px #4b3cad; /* Hiển thị hiệu ứng khi focus */
+}
+
+button {
+    background-color: #760504;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #e45f5f; /* Đổi màu nền khi hover */
+}
+
+/* Label styles */
+label {
+    display: block;
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Checkbox styles */
+input[type="checkbox"] {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Forgot password link styles */
+.forgot-password {
+    text-align: right;
+    font-size: 14px;
+}
+
+/* Radio button styles */
+.check-role-item {
+    display: flex;
+    align-items: center;
+}
+
+.check-role-item input[type="radio"] {
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+/* Form container styles */
+.pop-up {
+    width: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Centering form content */
+.form-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-login-inside {
+    width: 100%;
+}
+
+/* Role selection container styles */
+.check-role {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ced4da; /* Border dưới */
+    background-color: #f8f9fa; /* Màu nền nhẹ nhàng */
+    padding-bottom: 10px; /* Khoảng cách dưới để tạo độ nổi bật cho border */
+}
+
+/* Form wrapper styles */
+.screen-80 {
+    margin: 80px 0;
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Additional styling */
+body {
+    background-color: #f8f9fa; /* Màu nền cho toàn bộ trang */
+}
+
+/* Thêm các điều chỉnh vị trí */
+.form-login-inside {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.checkbox-remember {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.checkbox-remember input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.forgot-password {
+    text-align: right;
+}
+
+button {
+    width: 100%;
 }

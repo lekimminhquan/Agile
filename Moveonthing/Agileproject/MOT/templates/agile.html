@@ -6,49 +6,146 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <body>
-
+  <div class="header-container">
+    <div class="logo-container">
+      <img src="./static/images/logo.png" alt="Logo" class="logo">
+    </div>
+      <!-- Thanh thông báo đầu trang -->
+    <div class="header-top">
+        <div class="title">M O V E  O N  T H I N G</div>
+        <div class="sub-title">
+          <i class="fab fa-facebook"></i> <!-- Biểu tượng Facebook -->
+          <i class="fab fa-instagram"></i> <!-- Biểu tượng Instagram -->
+          <i class="fab fa-google"></i> <!-- Biểu tượng Google -->
+          <a class="login" href="{% url 'Login' %}"><i class="fas fa-user" style="border-right: 1px solid #ccc; padding-right: 10px;"></i>ĐĂNG NHẬP</a>
+        </div>
+    </div>
+  </div>
 <!-- Content will go here -->
-<nav >
+
+<!-- <nav >
    <h1>TRƯỜNG ĐẠI HỌC ABC</h1>
    <h2>Số 280 An Dương Vương, phường 4, quận 5,TP.HCM</h2>
    <h2> Điện thoại: 01234567</h2>
-</nav>  
-<ul>
-  <li><a class="active" href="#home">Trang chủ</a></li>
-  <li><a href="#news">Ngành</a></li>
-  <li><a href="#contact">Hướng dẫn</a></li>
-  <a class="login" href="{% url 'Login' %}">Đăng nhập</a>
-  
-</ul>
-  
- <div class="container" >
-   <div class="noti">
-    <i class="fa-regular fa-bell"></i>
-    <h> Thông báo mới</h>
-   </div>
-   <div class="news-container">
-    <div class="nd">
-        <a href="#">Thông báo về kế hoạch tổ chức thi học kì 2 năm 2022 - 2023</a>
-        
-    </div>
-    <div class="nd">
-        <a href="#">Thông báo phúc khảo học kỳ 1 2023-2024</a>
-        
-    </div>
-    <div class="nd">
-        <a href="#">Thông báo kế hoạch đào tạo học phần Quốc phòng – An ninh học Kì II, Năm học 2023 – 2024 cho sinh viên hệ chính quy</a>
-        
-    </div>
-    <div class="nd">
-        <a href="#">Thông báo về thời gian nộp học phí học kì 2 năm 2023 - 2024</a>
-        
-    </div>
-   </div>
-   
- </div>
+</nav> -->
 
-   
-   
- 
+<div>
+  <ul class="menu">
+    <li style="margin-left: 20%;"><a class="active" href="{% url 'Agile' %}">Trang Chủ</a></li>
+    <li><a href="#news">Giới Thiệu</a></li>
+    <li><a href="#contact">Tin Tức - Sự Kiện</a></li>
+    <li><a href="#">Tuyển Sinh</a></li>
+    <li><a href="#">Đào Tạo</a></li>
+    <input  s type="search" placeholder="What can we help you find?">
+  </ul>
+  <div class="section-picture">
+    <div class="background-picture">
+        <img class="mySlides" src="./static/images/bg1.jpg" >
+        <img class="mySlides" src="./static/images/bg2.jpg" >
+        <img class="mySlides" src="./static/images/bg3.jpeg" >
+
+    </div>
+    <div class="picture-caption">
+        <h1>"MOVE ON THING UNIVERSITY"</h1>
+        <p><i>Address: 280 An Dương Vương, Ward 4, Distric 5, TP.HCM <br> Phone Number: 0123.123.123</i></p>
+    </div>
+  </div>
+</div>
+  
+<div class="container">
+  <nav class="sidebar">
+    <h2><img src="./static/images/iconvolume.png" style="width: 24px; height: 24px; vertical-align: middle;" /> TIN TỨC</h2>
+    <ul class="notification-list">
+          <li><a href="#">Thông báo chung</a></li>
+          <li><a href="#">Tiếp nhận thông tin Sinh Viên</a></li>
+          <li><a href="#">Miên học, miên thi ngoại ngữ, tin học</a></li>
+          <li><a href="#">Rèn luyện, thực tập sư phạm</a></li>
+      </ul>
+  </nav>
+  <div class="content">
+      <div class="events">
+          <div class="event">
+              <h2><img src="./static/images/iconevent.png" style="width: 24px; height: 24px; vertical-align: middle;" /> SỰ KIỆN MỚI</h2>
+              <!-- Thêm các khung chứa thông tin về sự kiện ở đây -->
+              <div class="section-news">
+                <div class="news-collection">
+                    <div class="collection-grid">
+                      <div class="collection-item item-1">
+                        <img src="./static/images/ev1.jpg" alt="news 1">
+                        <p class="animated-text zoom-in">Bế mạc và trao giải Hội thao Học sinh, sinh viên Trường Đại học Sư phạm Thành phố Hồ Chí Minh năm 2024</p>
+                      </div>
+                      <div class="collection-item item-2">
+                        <img src="./static/images/ev2.jpg" alt="news 2">
+                        <p class="animated-text zoom-in">Đề cương tuyên truyền kỷ niệm 120 năm Ngày sinh đồng chí Trần Phú (01/5/1904 - 01/5/2024)</p>
+                      </div>
+                      <div class="collection-item item-3">
+                        <img src="./static/images/ev3.jpg" alt="news 3">
+                        <p class="animated-text zoom-in">Hơn 1.700 học sinh, sinh viên Trường Đại học Sư phạm Thành phố Hồ Chí Minh tham gia Giải Việt dã học sinh, sinh viên lần thứ II, năm 2024</p>
+                      </div>
+                      <div class="collection-item item-4">
+                        <img src="./static/images/ev4.jpg" alt="news 4">
+                        <p class="animated-text zoom-in">Chính thức khởi động Cuộc thi "Đại sứ Văn hoá đọc” năm 2024</p>
+                      </div>
+                      
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="event">
+            <h2><img src="./static/images/iconnof.png" style="width: 24px; height: 24px; vertical-align: middle;" /> THÔNG BÁO</h2>
+            <!-- Thêm các khung chứa thông tin về sự kiện ở đây -->
+            <div class="notification">
+              <ul>
+                  <li>
+                      <h3>Thông tin phát bằng tốt nghiệp đợt tháng 3/2024</h3>
+                      <p> Sinh viên tốt nghiệp đợt tháng 03/2024 sẽ bắt đầu nhận bằng từ ngày 02/5/2024 tại phòng A.107 (giờ hành chính).</p>
+                  </li>
+                  <li>
+                      <h3>THÔNG BÁO VỀ VIỆC ĐĂNG KÍ XÉT TUYỂN HỌC CÙNG LÚC HAI CHƯƠNG TRÌNH NĂM 2024</h3>
+                      <p>Trường Đại học Sư phạm Thành phố Hồ Chí Minh thông báo về việc đăng kí xét tuyển học cùng lúc hai chương trình năm 2024 như sau:</p>
+                  </li>
+                  <li>
+                    <h3>Thông báo về Kế hoạch tổ chức thi kết thúc học kỳ 2 năm học 2023 - 2024</h3>
+                    <p>Trường Đại học Sư phạm Thành phố Hồ Chí Minh thông báo về việc đăng kí xét tuyển học cùng lúc hai chương trình năm 2024 như sau:</p>
+                </li>
+                <li>
+                  <h3>THÔNG BÁO VỀ VIỆC ĐĂNG KÍ XÉT TUYỂN HỌC CÙNG LÚC HAI CHƯƠNG TRÌNH NĂM 2024</h3>
+                  <p>Sinh viên xem lịch thi tại đây: https://drive.google.com/file/d/1zhZMa5ks2YI7yIpwA1IGPIe1JAUxvU0L/view?usp=drive_link</p>
+              </li>
+                  <!-- Thêm các mục thông báo khác tùy thích -->
+              </ul>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+      <div class="footer-content">
+          <p>&copy; 2024 Your Website. All rights reserved.</p>
+      </div>
+  </div>
+</footer>
+
+<!-- js basix -->
+<script>
+  var slideIndex = 0;
+  showSlides();
+  function showSlides() {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {
+        slideIndex = 1
+    }
+    slides[slideIndex-1].style.display = "block";
+    setTimeout(showSlides, 3000); // Thời gian chuyển đổi ảnh (3 giây)
+}
+
+</script>
+
 </body>
 </html>

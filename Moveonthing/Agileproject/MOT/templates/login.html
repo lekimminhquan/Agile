@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../static/login.css">
+    <link rel="stylesheet" href="static/login.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Display:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
@@ -11,13 +12,31 @@
 </head>
 <body>
     <div>
-        <div class="screen-20">
-            <div class="header">
-                <span><b>TRƯỜNG ĐẠI HỌC ABC</b></span>
-                <span style="font-size: medium;"><b>Số 280 An Dương Vương, phường 4, quận 5, TP.HCM</b></span>
-                <span style="font-size: medium;"><b>Điện thoại: 0123456789</b></span>
+        <div class="header-container">
+            <div class="logo-container">
+              <img src="./static/images/logo.png" alt="Logo" class="logo">
             </div>
-        </div>
+              <!-- Thanh thông báo đầu trang -->
+            <div class="header-top">
+                <div class="title">M O V E  O N  T H I N G</div>
+                <div class="sub-title">
+                  <i class="fab fa-facebook"></i> <!-- Biểu tượng Facebook -->
+                  <i class="fab fa-instagram"></i> <!-- Biểu tượng Instagram -->
+                  <i class="fab fa-google"></i> <!-- Biểu tượng Google -->
+                  <a class="login" href="{% url 'Login' %}"><i class="fas fa-user" style="border-right: 1px solid #ccc; padding-right: 10px;"></i>ĐĂNG NHẬP</a>
+                </div>
+            </div>
+          </div>
+          <div>
+            <ul class="menu">
+                <li style="margin-left: 20%;"><a class="active" href="{% url 'Agile' %}">Trang Chủ</a></li>
+                <li><a href="#news">Giới Thiệu</a></li>
+                <li><a href="#contact">Tin Tức - Sự Kiện</a></li>
+                <li><a href="#">Tuyển Sinh</a></li>
+                <li><a href="#">Đào Tạo</a></li>
+                <input  s type="search" placeholder="What can we help you find?">
+              </ul>
+          </div>
         <div class="screen-80">
             <div class="pop-up">
                 <form id="loginForm" style="height: 100%;" method="POST" action="{% url 'Login' %}">
@@ -31,7 +50,7 @@
                             <span><b>Giáo viên</b></span>
                         </div>
                         <div class="check-role-item">
-                            <input type="radio" name="checka" id="check" value="admin" class="checkb">
+                            <input type="radio" name="checka" id="check" value="admin" class="checkb" checked>
                             <span><b>Phòng giáo vụ</b></span>
                         </div>
                     </div>
