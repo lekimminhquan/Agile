@@ -1,92 +1,139 @@
-
-.container-header{
-   background:Linear-gradient(#e45f5f,#4b3cad);
-    border: 1px solid black;
-    height:120px;
-    width: 100%;
-    text-align: center;
-    color: white;
-}
-.text-header{
-    font-size: 20;
-    font-family: 'Noto Serif Display';
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2; /* Màu nền xám nhạt */
+  color: #333; /* Màu chữ xám đậm */
+}
+
+/* Header */
+.logo {
+  width: 70%;
+  height: auto;
+  position: absolute; /* Đặt phần tử tuyệt đối */
+  bottom: 20px; /* Cách bottom 20px */
+  left: 50%; /* Đặt từ giữa theo chiều ngang */
+  transform: translateX(-50%); /* Dịch chuyển ngược lại 50% của chiều rộng của chính phần tử */
+}
+
+.container-header {
+  background-color: #fff; /* Màu trắng cho header */
+  border-bottom: 1px solid #ddd; /* Đường viền dưới */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+}
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  padding: 10px; /* Khoảng cách giữa các phần tử */
+}
+
+.search-bar {
+  padding: 8px 12px; /* Kích thước của input */
+  border:1px solid black 1;
+  border-radius: 20px; /* Bo tròn cạnh của input */
+  outline: none; /* Loại bỏ đường viền khi focus */
+  color: #333; /* Màu chữ đen */
+}
+
+.icon {
+  margin-left: 10px; /* Khoảng cách giữa các biểu tượng */
+  color: #333; /* Màu chữ đen của biểu tượng */
+  cursor: pointer; /* Con trỏ khi rê chuột */
+
+}
+
+.icon:hover {
+  color: #8b0000; /* Màu chữ đỏ nhạt khi hover */
+}
+
+
+/* Sidebar */
 .sidebar {
-    margin: 25px 0px;
-    padding: 0;
-    width: 300px;
-    background-color: #f1f1f1;
-    overflow: auto;
-    text-align: center;
-    font-size: 25px;
-    border-radius: 25px;
-    position:absolute;
-  }
-  
-  /* Sidebar links */
-  .sidebar a {
-    display: block;
-    color: black;
-    padding: 16px;
-    text-decoration: none;
-  }
-  
-  /* Active/current link */
-  .sidebar a.active {
-    background:Linear-gradient(#e45f5f,#4b3cad);
-    color: white;
-  }
-  
-  /* Links on mouse-over */
-  .sidebar a:hover:not(.active) {
-    background-color: #555;
-    color: white;
-  }
-  
-  /* Page content. The value of the margin-left property should match the value of the sidebar's width property */
-  div.content {
-    margin-left: 300px;
-    padding: 1px 16px;
-    
-  }
-  
-  /* On screens that are less than 700px wide, make the sidebar into a topbar */
-  @media screen and (max-width: 700px) {
-    .sidebar {
-      width: 100%;
-      height: auto;
-      position: relative;
-    }
-    .sidebar a {float: left;}
-    div.content {margin-left: 0;}
-  }
-  
-  /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-  @media screen and (max-width: 400px) {
-    .sidebar a {
-      text-align: center;
-      float: none;
-    }
-  }
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200px;
+  height: 100%;
+  background: radial-gradient(square, rgba(139, 0, 0, 0.8), rgba(255, 87, 51, 0.6)); /* Gradient từ đỏ đến cam với lớp màu trong suốt */
+  background-clip: padding-box; /* Clip background theo phần padding */
+  overflow-x: hidden;
+  padding-top: 20px; /* Để tránh chạm vào header */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Đổ bóng mềm mại */
+}
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+.sidebar h2 {
+  font-size: 18px; /* Giảm kích thước font */
+  margin-bottom: 15px; /* Tăng khoảng cách dưới */
+  letter-spacing: 1px; /* Khoảng cách giữa các ký tự */
+  color: #333; /* Màu chữ xám đậm */
+  position: relative; /* Để xác định vị trí cho đường viền */
+}
+
+.sidebar h2::after {
+  content: '';
+  position: absolute;
+  bottom: -5px; /* Đặt đường viền phía dưới vài pixel */
+  left: 0;
+  width: 50px; /* Chiều dài của đường viền */
+  height: 2px; /* Độ dày của đường viền */
+  background-color: black; /* Màu đỏ đậm cho đường viền */
+}
+
+.sidebar a {
+  padding: 15px;
+  text-decoration: none;
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  position: relative; /* Thêm thuộc tính position để định vị cho hiệu ứng */
+  transition: all 0.3s ease;
+}
+
+.sidebar a i {
+  margin-right: 10px; /* Khoảng cách giữa icon và chữ */
+  font-size: 20px; /* Giảm kích thước icon */
+}
+
+.sidebar a:hover {
+  background-color: #8b0000; /* Màu nền đỏ đậm khi di chuột qua */
+  color: #fff; /* Màu chữ trắng khi di chuột qua */
+}
+
+
+/* Content */
+.content {
+  margin-left: 200px;
+  padding: 5px;
+  background-color: #fff; /* Màu nền trắng */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+}
+
+/* Responsive */
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+    padding-top: 20px;
+  }
+  .sidebar a {
+    float: left;
+  }
+  .content {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
 }
