@@ -58,10 +58,10 @@
                         <div class="form-login-inside">
                             {% csrf_token %}
                             <label for="username">Tên đăng nhập:</label>
-                            <input type="text" name="username" id="username" placeholder="Tên đăng nhập">
+                            <input required type="text" name="username" id="username" placeholder="Tên đăng nhập" minlength="5" value="{{username}}">
                             <br>
                             <label for="password">Mật khẩu:</label>
-                            <input type="password" name="password" id="password" placeholder="Mật khẩu">
+                            <input required type="password" name="password" id="password" placeholder="Mật khẩu" minlength="4">
                             <br>
                             <div>
                                 <input type="checkbox" name="remember" id="remember" style="float: left;">
@@ -72,6 +72,11 @@
                         </div>
                     </div>
                 </form>
+                {% if messages %}
+                    {% for message in messages %}
+                    <p class="{{message.tags}}">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
             </div>
         </div>
     </div>

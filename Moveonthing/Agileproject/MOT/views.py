@@ -4,7 +4,7 @@ from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from MOT.models import Taikhoan
+from MOT.models import Taikhoan, Sinhvien, Lop
 from django.contrib.auth.hashers import make_password
 
 def Agile (request):
@@ -58,6 +58,7 @@ def Resetpass(request):
         return render(request, 'resetPassword.html')
 
 def Login(request):
+    context = {}
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -67,10 +68,23 @@ def Login(request):
             login(request, user)
             return redirect('Homepage') 
         else:
-            return render(request, 'login.html')
+            messages.warning(request, "Tài khoản hoặc mật khẩu không đúng. Vui lòng thử lại")
+            context["username"] = username
+            return render(request, 'login.html', context)
     else:
         return render(request, 'login.html')
 
 def Logout(request):
     logout(request)
     return redirect('Login')
+
+def TrangSinhvien(request):
+    if request.method == 'POST':
+        mssv = request.POST['mssv']
+        hotensv = request.POST['hotensv']
+        ngaysinh = request.POST['ngaysinh']
+        sodienthoai = request.POST['sodienthoai']
+        malop = Lop.objects.get(malop="K47.CNTT")
+        phanquyen = Taikhoan.objects.get(phanquyen="student")
+        sinhvien = Sinhvien.objects.create(mssv=mssv, hotensv=hotensv, ngaysinh=ngaysinh, sodienthoai=sodienthoai, malop=malop, phanquyen=phanquyen)
+    return render(request, 'sinhvien.html')
