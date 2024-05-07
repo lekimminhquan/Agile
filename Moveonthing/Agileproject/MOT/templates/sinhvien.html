@@ -1,0 +1,9 @@
+<form method="POST" action="sinhvien">
+    {% csrf_token %}
+    <input type="text" name="mssv" placeholder="mssv">
+    <input type="text" name="hotensv" placeholder="hotensv">
+    <input type="date" name="ngaysinh" placeholder="ngaysinh">
+    <input type="text" name="sodienthoai" placeholder="sodienthoai">
+    <input type="text" name="malop" placeholder="malop">
+    <input type="submit" value="Them">
+</form>
