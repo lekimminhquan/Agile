@@ -1,0 +1,272 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2; /* Màu nền xám nhạt */
+    color: #333; /* Màu chữ xám đậm */
+  }
+  
+  /* Header */
+  .logo {
+    width: 70%;
+    height: auto;
+    position: absolute; /* Đặt phần tử tuyệt đối */
+    bottom: 20px; /* Cách bottom 20px */
+    left: 50%; /* Đặt từ giữa theo chiều ngang */
+    transform: translateX(-50%); /* Dịch chuyển ngược lại 50% của chiều rộng của chính phần tử */
+  }
+  
+  .container-header {
+    background-color: #fff; /* Màu trắng cho header */
+    border-bottom: 1px solid #ddd; /* Đường viền dưới */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+  }
+  
+  .header-icons {
+    display: flex;
+    align-items: center;
+    padding: 10px; /* Khoảng cách giữa các phần tử */
+  }
+  
+  .search-bar {
+    padding: 8px 12px; /* Kích thước của input */
+    border:1px solid black 1;
+    border-radius: 20px; /* Bo tròn cạnh của input */
+    outline: none; /* Loại bỏ đường viền khi focus */
+    color: #333; /* Màu chữ đen */
+  }
+  
+  .icon {
+    margin-left: 10px; /* Khoảng cách giữa các biểu tượng */
+    color: #333; /* Màu chữ đen của biểu tượng */
+    cursor: pointer; /* Con trỏ khi rê chuột */
+  
+  }
+  
+  .icon:hover {
+    color: #8b0000; /* Màu chữ đỏ nhạt khi hover */
+  }
+  
+  
+  /* Sidebar */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100%;
+    background: radial-gradient(square, rgba(139, 0, 0, 0.8), rgba(255, 87, 51, 0.6)); /* Gradient từ đỏ đến cam với lớp màu trong suốt */
+    background-clip: padding-box; /* Clip background theo phần padding */
+    overflow-x: hidden;
+    padding-top: 20px; /* Để tránh chạm vào header */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Đổ bóng mềm mại */
+  }
+  
+  .sidebar h2 {
+    font-size: 18px; /* Giảm kích thước font */
+    margin-bottom: 15px; /* Tăng khoảng cách dưới */
+    letter-spacing: 1px; /* Khoảng cách giữa các ký tự */
+    color: #333; /* Màu chữ xám đậm */
+    position: relative; /* Để xác định vị trí cho đường viền */
+  }
+  
+  .sidebar h2::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; /* Đặt đường viền phía dưới vài pixel */
+    left: 0;
+    width: 50px; /* Chiều dài của đường viền */
+    height: 2px; /* Độ dày của đường viền */
+    background-color: black; /* Màu đỏ đậm cho đường viền */
+  }
+  
+  .sidebar a {
+    padding: 15px;
+    text-decoration: none;
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    position: relative; /* Thêm thuộc tính position để định vị cho hiệu ứng */
+    transition: all 0.3s ease;
+  }
+  
+  .sidebar a i {
+    margin-right: 10px; /* Khoảng cách giữa icon và chữ */
+    font-size: 20px; /* Giảm kích thước icon */
+  }
+  
+  .sidebar a:hover {
+    background-color: #8b0000; /* Màu nền đỏ đậm khi di chuột qua */
+    color: #fff; /* Màu chữ trắng khi di chuột qua */
+  }
+  
+  
+  /* Content */
+  .content {
+    margin-left: 200px;
+    padding: 5px;
+    background-color: #fff; /* Màu nền trắng */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+  }
+  
+.events {
+    background-color: #f9f9f9; /* Màu nền của phần chọn môn học và danh sách sinh viên */
+    border-radius: 10px; /* Bo tròn góc cho phần nội dung */
+}
+/* Định dạng tiêu đề */
+h1 {
+  font-size: 24px;
+  margin: 20px 10px;
+}
+
+/* Định dạng phần form */
+form {
+  margin-bottom: 20px;
+}
+
+/* Định dạng dropdown */
+select {
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 50%;
+  margin-bottom: 10px;
+}
+
+/* Định dạng button */
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #d9534f; /* Màu đỏ */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+/* Định dạng tiêu đề */
+.titlee {
+  text-align: center; /* Căn giữa tiêu đề */
+  font-size: 24px;
+  margin: 20px 0; /* Khoảng cách với các phần khác */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Bóng cho chữ */
+}
+
+/* Định dạng nút submit khi hover */
+button:hover {
+  background-color: #c9302c; /* Màu đỏ nhạt khi hover */
+}
+
+/* CSS cho bảng danh sách sinh viên */
+table {
+  margin-left: 15px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px; /* Khoảng cách trên của bảng */
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* CSS cho form pop-up */
+.popup-form {
+  display: none; /* Ẩn form khi trang được tải lên */
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 9999;
+}
+
+.form-container {
+  max-width: 500px;
+  margin: auto;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* FORM */
+/* Định dạng các label */
+.popup-form label {
+  display: block; /* Hiển thị mỗi label trên một dòng */
+  margin-bottom: 5px; /* Khoảng cách giữa các label */
+}
+
+/* Định dạng các trường input */
+.popup-form input[type="text"],
+input[type="number"] {
+  width: 100%; /* Đảm bảo rằng input sẽ mở rộng toàn bộ chiều rộng của parent */
+  padding: 8px; /* Kích thước padding cho input */
+  margin-bottom: 10px; /* Khoảng cách giữa các input */
+  border: 1px solid #ccc; /* Định dạng viền của input */
+  border-radius: 4px; /* Bo tròn góc của input */
+  box-sizing: border-box; /* Đảm bảo rằng padding và border không làm thay đổi kích thước của input */
+}
+
+/* Định dạng nút submit */
+.popup-form button[type="submit"] {
+  background-color: #4CAF50; /* Màu nền của nút */
+  color: white; /* Màu chữ của nút */
+  padding: 10px 20px; /* Kích thước padding cho nút */
+  border: none; /* Loại bỏ viền */
+  border-radius: 4px; /* Bo tròn góc */
+  cursor: pointer; /* Biến con trỏ thành kiểu pointer khi di chuột vào nút */
+}
+
+/* Định dạng hover cho nút submit */
+.popup-form button[type="submit"]:hover {
+  background-color: #45a049; /* Màu nền thay đổi khi hover */
+}
+
+  /* Responsive */
+  @media screen and (max-width: 700px) {
+    .sidebar {
+      width: 100%;
+      height: auto;
+      position: relative;
+      padding-top: 20px;
+    }
+    .sidebar a {
+      float: left;
+    }
+    .content {
+      margin-left: 0;
+    }
+  }
+  
+  @media screen and (max-width: 400px) {
+    .sidebar a {
+      text-align: center;
+      float: none;
+    }
+  }
+  

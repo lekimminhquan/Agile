@@ -27,9 +27,9 @@
         <nav class="sidebar">
               <div class="sidebar">
                 <h2><img src="./static/images/icon-.png" style="width: 24px; height: 24px; vertical-align: middle;" /> HI ADMIN</h2>
-                  <a class="active" href="#home"><i class="fa fa-home"></i> Trang chủ</a>
+                  <a class="active" href="{% url 'Homepage' %}"><i class="fa fa-home"></i> Trang chủ</a>
                   <a href="sinhvien"><i class="fa fa-user"></i> Sinh viên</a>
-                  <a href="#"><i class="fa fa-book"></i> Tổ chức thi</a>
+                  <a href="studentPoint"><i class="fa fa-book"></i> Quản lý nhập điểm</a>
                   <a href=""><i class="fa fa-file-text"></i> Kết quả tốt nghiệp</a>
                   <a href="{% url 'Logout' %}"><i class="fa fa-sign-out"></i> Đăng xuất</a>
                   <img src="./static/images/logo.png" alt="Logo" class="logo">

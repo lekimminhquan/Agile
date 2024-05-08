@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/studentPoint.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <title>Select Subject</title>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2><img src="./static/images/icon-.png" style="width: 24px; height: 24px; vertical-align: middle;" /> HI ADMIN</h2>
+            <a class="active" href="{% url 'Homepage' %}"><i class="fa fa-home"></i> Trang chủ</a>
+            <a href="sinhvien"><i class="fa fa-user"></i> Sinh viên</a>
+            <a href="studentPoint"><i class="fa fa-book"></i> Quản lý nhập điểm</a>
+            <a href=""><i class="fa fa-file-text"></i> Kết quả tốt nghiệp</a>
+            <a href="{% url 'Logout' %}"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+            <img src="./static/images/logo.png" alt="Logo" class="logo">
+        </nav>
+
+        <div class="content" >
+            <div class="events">
+                <div class="event">
+                    <div class="header-icons">
+                        <input type="text" placeholder="Tìm kiếm..." class="search-bar" style="width: 400px;">
+                        <span class="icon"><i class="fa fa-comments"></i></span>
+                        <span class="icon"><i class="fa fa-envelope"></i></span>
+                        <span class="icon"><i class="fa fa-bell"></i></span>
+                    </div>
+                </div>
+                <!-- ĐỂ TẠM ĐỂ SHOW ĐIỂM SV THEO MÔN -->
+                <h1>DANH SÁCH MÔN HỌC</h1>
+                <form method="POST">
+                    {% csrf_token %}
+                    <select id="subject" name="subject">
+                        {% for subject in subjects %}
+                        <option value="{{ subject.mahp }}" {% if subject.mahp == selected_subject %}selected{% endif %}>{{ subject.tenhp }}</option>
+                        {% endfor %}
+                    </select>
+                    <!-- Thêm một input hidden để lưu giữ giá trị môn học được chọn -->
+                    <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
+                    <button type="submit">Hiển Thị</button>
+                </form>
+
+                <div class="popup-form" id="popupForm">
+                    <form method="POST" id="popupForm">
+                        {% csrf_token %}
+                        <!-- Thêm trường ẩn để xác định request từ form pop-up -->
+                        <input type="hidden" name="popup_form" value="true">
+                        <!-- Truyền giá trị selected_subject từ ô select vào các trường input trong form pop-up -->
+                        <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
+                        <span class="close" onclick="closeForm()">&times;</span>
+                        <!-- Thêm các trường input cho MSSV, Họ tên sinh viên, Điểm GK, Điểm CK -->
+                        <label for="mssv">MSSV:</label>
+                        <input type="text" id="mssv" name="mssv" required>
+                        <label for="diem_gk">Điểm GK:</label>
+                        <input type="number" id="diem_gk" name="diem_gk" min="0" max="10" step="0.01" required>
+                        <label for="diem_ck">Điểm CK:</label>
+                        <input type="number" id="diem_ck" name="diem_ck" min="0" max="10" step="0.01" required>
+                        <button id="submitPopup" type="submit">Submit</button>
+                    </form>
+                    
+                </div>
+                
+                
+                
+                <h2 >{% for subject in subjects %}
+                    {% if subject.mahp == selected_subject %}
+                        <h2 class="titlee">DANH SÁCH SINH VIÊN MÔN {{ subject.tenhp }} NĂM HỌC 2023-2024</h2>
+                    {% endif %}
+                {% endfor %}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>MSSV</th>
+                            <th>Họ và Tên</th>
+                            <th>Lớp</th>
+                            <th>Điểm GK</th>
+                            <th>Điểm CK</th>
+                            <th>Điểm Trung Bình</th> <!-- Thêm cột tổng -->
+                            <th></th> <!-- Thêm cột hành động -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in student_list %}
+                        <tr>
+                            <td>{{ student.mssv }}</td>
+                            <td>{{ student.hotensv }}</td>
+                            <td>{{ student.tenlop }}</td>
+                            <td>{{ student.diem_gk }}</td>
+                            <td>{{ student.diem_ck }}</td>
+                            <td>{{ student.diem_tong }}</td> <!-- Hiển thị điểm tổng -->
+                            <td>
+                                <button><i class="fa fa-edit"></i></button>
+                                <button><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <button onclick="openForm()" class="add-button"><i class="fa fa-plus"></i></button> <!-- Button thêm -->
+
+            </div>
+        </div>
+    </div>
+    
+    <script>
+         function openForm() {
+            document.getElementById("popupForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("popupForm").style.display = "none";
+        }
+        $(document).ready(function() {
+            // Bắt sự kiện khi form pop-up submit
+            $('#popupForm form').submit(function(event) {
+                event.preventDefault(); // Ngăn chặn hành động mặc định của form
+                var formData = $(this).serialize(); // Lấy dữ liệu từ form
+
+                // Gửi request POST đến server
+                $.post('', formData, function(data) {
+                    // Hiển thị thông điệp từ server
+                    alert(data.message);
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>
