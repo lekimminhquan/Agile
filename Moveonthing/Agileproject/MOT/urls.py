@@ -10,6 +10,8 @@ urlpatterns = [
     path('homepage', views.Homepage, name='Homepage'),
     path('logout', views.Logout, name="Logout"),
     path('sinhvien', views.TrangSinhvien, name="Sinhvien"),
+    path('sinhvien/search', views.searchSinhVien, name="SearchSinhVien"),
     path('studentPoint', views.select_subject, name="Studentpoint"),
+    
 
 ]

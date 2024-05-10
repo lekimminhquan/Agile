@@ -1,9 +1,84 @@
-<form method="POST" action="sinhvien">
-    {% csrf_token %}
-    <input type="text" name="mssv" placeholder="mssv">
-    <input type="text" name="hotensv" placeholder="hotensv">
-    <input type="date" name="ngaysinh" placeholder="ngaysinh">
-    <input type="text" name="sodienthoai" placeholder="sodienthoai">
-    <input type="text" name="malop" placeholder="malop">
-    <input type="submit" value="Them">
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static/studentInfo.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <title>Select Subject</title>
+    <script>
+        $(document).ready(function() {
+            $('.search-bar').on('input', function() {
+                let query = $(this).val();
+                $.get("{% url 'SearchSinhVien' %}?query=" + query, function(data) {
+                    $('tbody').empty();
+                    $.each(data, function(index, sv) {
+                        $('tbody').append(
+                            `<tr>
+                                <td>${sv.mssv}</td>
+                                <td>${sv.hotensv}</td>
+                                <td>${sv.ngaysinh}</td>
+                                <td>${sv.sodienthoai}</td>
+                                <td>${sv.malop}</td>
+                                <td>
+                                    <button><i class="fa fa-info-circle"></i></button>
+                                    <button><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>`
+                        );
+                    });
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2><img src="./static/images/icon-.png" style="width: 24px; height: 24px; vertical-align: middle;" /> HI ADMIN</h2>
+            <a class="active" href="{% url 'Homepage' %}"><i class="fa fa-home"></i> Trang chủ</a>
+            <a href="sinhvien"><i class="fa fa-user"></i> Sinh viên</a>
+            <a href="studentPoint"><i class="fa fa-book"></i> Quản lý nhập điểm</a>
+            <a href=""><i class="fa fa-file-text"></i> Kết quả tốt nghiệp</a>
+            <a href="{% url 'Logout' %}"><i class="fa fa-sign-out"></i> Đăng xuất</a>
+            <img src="./static/images/logo.png" alt="Logo" class="logo">
+        </nav>
+
+        <div class="content" >
+            <div class="events">
+                <div class="event">
+                    <div class="header-icons">
+                        <form method="GET" action="{% url 'Sinhvien' %}">
+                            <input type="text" name="search" placeholder="Mssv hoặc Họ tên..." class="search-bar" style="width: 400px;" value="{{ search_query }}">
+                            {% comment %} <span class='icon'><i class="fa fa-search"></i></span> {% endcomment %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="table-container">
+                <h3 class="title-table">THÔNG TIN SINH VIÊN</h3>
+                    <table>
+                    <thead>
+                        <tr>
+                        <th>Mã Sinh Viên</th>
+                        <th>Họ và Tên</th>
+                        <th>Ngày Sinh</th>
+                        <th>Số Điện Thoại</th>
+                        <th>Mã Lớp</th>
+                        <th>Tùy chọn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                    </table>
+                    <div class="btn-add">
+                        <button><i class="fa fa-add"></i></button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</body>  
+
+
