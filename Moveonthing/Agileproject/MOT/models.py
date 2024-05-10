@@ -204,7 +204,7 @@ class Sinhvien(models.Model):
 class Taikhoan(AbstractBaseUser):
     matk = models.AutoField(primary_key=True)
     username = models.CharField(max_length=50, blank=True, null=True)
-    password = models.CharField(max_length=50, blank=True, null=True)
+    password =  models.CharField(max_length=50,blank=True, null=True)
     phanquyen = models.CharField(unique=True, max_length=20, blank=True, null=True)
     last_login = models.DateTimeField(blank=True, null=True)
 

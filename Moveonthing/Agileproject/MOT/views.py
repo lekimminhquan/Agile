@@ -8,6 +8,7 @@ from MOT.models import Taikhoan, Sinhvien, Lop, Diem, Hocphan, Nganh
 from django.contrib.auth.hashers import make_password
 from django.http import JsonResponse
 
+
 def Agile (request):
     template = loader.get_template('agile.html')
     return HttpResponse(template.render())
@@ -80,16 +81,31 @@ def Logout(request):
     return redirect('Login')
 
 def TrangSinhvien(request):
+    danh_sach_sinh_vien = Sinhvien.objects.all()
     if request.method == 'POST':
-        mssv = request.POST['mssv']
-        hotensv = request.POST['hotensv']
-        ngaysinh = request.POST['ngaysinh']
-        sodienthoai = request.POST['sodienthoai']
-        malop = Lop.objects.get(malop="K47.CNTT")
-        phanquyen = Taikhoan.objects.get(phanquyen="student")
-        sinhvien = Sinhvien.objects.create(mssv=mssv, hotensv=hotensv, ngaysinh=ngaysinh, sodienthoai=sodienthoai, malop=malop, phanquyen=phanquyen)
-    return render(request, 'sinhvien.html')
+        mssv = request.POST.get('mssv', '')
+        hotensv = request.POST.get('hotensv', '')
+        ngaysinh = request.POST.get('ngaysinh', '')
+        sodienthoai = request.POST.get('sodienthoai', '')
+        malop = Lop.objects.get(ma_lop="K47.CNTT")
+        phanquyen = Taikhoan.objects.get(phan_quyen="student")
+        sinhvien = Sinhvien.objects.create(mssv=mssv, hotensv=hotensv, ngaysinh=ngaysinh, sodienthoai=sodienthoai, malop=malop, phanquyen=phanquyen)       
+    return render(request, 'sinhvien.html', {'sinh_vien': danh_sach_sinh_vien})
 
+def searchSinhVien(request):
+    query = request.GET.get('query', '')
+    sinh_vien_list = Sinhvien.objects.filter(
+        mssv__icontains=query
+    )|Sinhvien.objects.filter(hotensv__icontains=query)
+    data = [{
+        'mssv': sv.mssv,
+        'hotensv': sv.hotensv,
+        'ngaysinh': sv.ngaysinh.strftime('%Y-%m-%d'),
+        'sodienthoai': sv.sodienthoai,
+        'malop':sv.malop.malop
+    }  for sv in sinh_vien_list]
+
+    return JsonResponse(data, safe=False)
 
 def select_subject(request):
     if request.method == 'POST':
@@ -142,3 +158,4 @@ def select_subject(request):
         # Nếu là GET request, chỉ hiển thị form chọn môn học
         subjects = Hocphan.objects.all()
         return render(request, 'studentPoint.html', {'subjects': subjects})
+    
