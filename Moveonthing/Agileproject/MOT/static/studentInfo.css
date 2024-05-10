@@ -146,10 +146,36 @@
    margin:10px 10px;
    padding: 10px 15px;
    background-color: #e45f5f;
+   cursor: pointer;
  }
 .title-table{
   text-align: center;
   margin-top: 10px;
   font-size: 24px;
   text-shadow: whitesmoke;
+}
+
+.form-flex {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  margin: 30px 0;
+}
+
+.form-flex input {
+  border: none;
+  border-bottom: 2px solid;
+  font-size: 1.2rem;
+  padding: 10px 0;
+}
+
+.btn-submit-form {
+  color: white;
+  background-color: #333;
+  border-radius: 10px;
+}
+
+.btn-submit-form:hover {
+  color: black;
+  background-color: #e45f5f;
 }

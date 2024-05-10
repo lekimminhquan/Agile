@@ -83,14 +83,14 @@ def Logout(request):
 def TrangSinhvien(request):
     danh_sach_sinh_vien = Sinhvien.objects.all()
     if request.method == 'POST':
-        mssv = request.POST.get('mssv', '')
-        hotensv = request.POST.get('hotensv', '')
-        ngaysinh = request.POST.get('ngaysinh', '')
-        sodienthoai = request.POST.get('sodienthoai', '')
-        malop = Lop.objects.get(ma_lop="K47.CNTT")
-        phanquyen = Taikhoan.objects.get(phan_quyen="student")
+        mssv = request.POST["mssv"]
+        hotensv = request.POST["hotensv"]
+        ngaysinh = request.POST["ngaysinh"]
+        sodienthoai = request.POST["sodienthoai"]
+        malop = Lop.objects.get(malop="K47.CNTT")
+        phanquyen = Taikhoan.objects.get(phanquyen="student")
         sinhvien = Sinhvien.objects.create(mssv=mssv, hotensv=hotensv, ngaysinh=ngaysinh, sodienthoai=sodienthoai, malop=malop, phanquyen=phanquyen)       
-    return render(request, 'sinhvien.html', {'sinh_vien': danh_sach_sinh_vien})
+    return render(request, 'sinhvien.html', {'danh_sach_sinh_vien': danh_sach_sinh_vien})
 
 def searchSinhVien(request):
     query = request.GET.get('query', '')
