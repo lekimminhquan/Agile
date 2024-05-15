@@ -161,13 +161,14 @@ class Hocphan(models.Model):
 
 class Lop(models.Model):
     malop = models.CharField(primary_key=True, max_length=20)
-    tenlop = models.CharField(max_length=100, blank=True, null=True)
     manganh = models.ForeignKey('Nganh', models.DO_NOTHING, db_column='manganh', blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'lop'
 
+    def __str__(self):
+        return self.malop
 
 class Nganh(models.Model):
     manganh = models.CharField(primary_key=True, max_length=20)

@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from MOT.models import Taikhoan, Sinhvien, Lop, Diem, Hocphan, Nganh
 from django.contrib.auth.hashers import make_password
 from django.http import JsonResponse
-
+from MOT.form import ThemSinhVienForm
 
 def Agile (request):
     template = loader.get_template('agile.html')
@@ -84,15 +84,17 @@ def Logout(request):
 
 def TrangSinhvien(request):
     danh_sach_sinh_vien = Sinhvien.objects.all()
-    if request.method == 'POST':
-        mssv = request.POST["mssv"]
-        hotensv = request.POST["hotensv"]
-        ngaysinh = request.POST["ngaysinh"]
-        sodienthoai = request.POST["sodienthoai"]
-        malop = Lop.objects.get(malop="K47.CNTT")
-        phanquyen = Taikhoan.objects.get(phanquyen="student")
-        sinhvien = Sinhvien.objects.create(mssv=mssv, hotensv=hotensv, ngaysinh=ngaysinh, sodienthoai=sodienthoai, malop=malop, phanquyen=phanquyen)       
-    return render(request, 'sinhvien.html', {'danh_sach_sinh_vien': danh_sach_sinh_vien})
+    form = ThemSinhVienForm()
+    if (request.method == "POST"):
+        phanQuyen = Taikhoan.objects.get(phanquyen="student")
+        f = ThemSinhVienForm(request.POST)
+        if (f.is_valid()):
+            sinhVien = f.save(commit=False) 
+            sinhVien.phanquyen = phanQuyen
+            sinhVien.save()
+        else:
+            return render(request, 'sinhvien.html', {'danh_sach_sinh_vien': danh_sach_sinh_vien, 'form': f})
+    return render(request, 'sinhvien.html', {'danh_sach_sinh_vien': danh_sach_sinh_vien, 'form': form})
 
 def searchSinhVien(request):
     query = request.GET.get('query', '')

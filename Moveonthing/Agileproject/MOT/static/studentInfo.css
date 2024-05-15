@@ -158,16 +158,21 @@
 .form-flex {
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  margin: 30px 0;
+  gap: 10px;
+  margin: 15px 0;
 }
 
-.form-flex input {
+.form-flex, label {
+  font-size: 1.2rem;
+}
+
+.form-flex input, select{
   border: none;
   border-bottom: 2px solid;
   font-size: 1.2rem;
   padding: 10px 0;
 }
+
 
 .btn-submit-form {
   color: white;
@@ -178,4 +183,7 @@
 .btn-submit-form:hover {
   color: black;
   background-color: #e45f5f;
+}
+.errorlist li {
+  color: red;
 }

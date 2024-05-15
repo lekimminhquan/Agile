@@ -104,13 +104,15 @@
                 <form method="POST" action="sinhvien">
                     {% csrf_token %}
                     <div class="form-flex">
-                        <input type="text" placeholder="Mã số sinh viên" name="mssv" required>
+                        <!-- <input type="text" placeholder="Mã số sinh viên" name="mssv" required>
                         <input type="text" placeholder="Họ và tên" name="hotensv" required>
                         <input type="date" placeholder="mssv" name="ngaysinh" required>
-                        <input type="text" placeholder="Số điện thoại" name="sodienthoai" required>
+                        <input type="text" placeholder="Số điện thoại" name="sodienthoai" required> -->
+                        {{form}}
                         <input class="btn-submit-form" type="submit" value="Thêm sinh viên">
                     </div>
                 </form>
+                
             </div>
             
         </div>
