@@ -14,6 +14,6 @@ urlpatterns = [
     path('sinhvien/search', views.searchSinhVien, name="SearchSinhVien"),
     path('educationprogram',views.educationprogram,name="educationprogram"),
     path('studentPoint', views.select_subject, name="Studentpoint"),
-    
+    path('studentPoint/xoadiem/<mssv_id>/<mahp_id>',views.Xoadiemsinhvien,name='Xoadiemsinhvien'),
 
 ]

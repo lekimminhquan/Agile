@@ -190,3 +190,8 @@ def select_subject(request):
         subjects = Hocphan.objects.all()
         return render(request, 'studentPoint.html', {'subjects': subjects})
     
+def Xoadiemsinhvien(request,mssv_id,mahp_id):
+    if request.method == "GET":
+        diem = Diem.objects.get(mssv=mssv_id,mahp = mahp_id)
+        diem.delete()
+    return redirect('Studentpoint')

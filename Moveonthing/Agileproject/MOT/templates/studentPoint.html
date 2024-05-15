@@ -67,42 +67,44 @@
                 </div>
                 
                 
-                
-                <h2 >{% for subject in subjects %}
-                    {% if subject.mahp == selected_subject %}
-                        <h2 class="titlee">DANH SÁCH SINH VIÊN MÔN {{ subject.tenhp }} NĂM HỌC 2023-2024</h2>
-                    {% endif %}
-                {% endfor %}</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>MSSV</th>
-                            <th>Họ và Tên</th>
-                            <th>Lớp</th>
-                            <th>Điểm GK</th>
-                            <th>Điểm CK</th>
-                            <th>Điểm Trung Bình</th> <!-- Thêm cột tổng -->
-                            <th></th> <!-- Thêm cột hành động -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for student in student_list %}
-                        <tr>
-                            <td>{{ student.mssv }}</td>
-                            <td>{{ student.hotensv }}</td>
-                            <td>{{ student.malop }}</td>
-                            <td>{{ student.diem_gk }}</td>
-                            <td>{{ student.diem_ck }}</td>
-                            <td>{{ student.diem_tong }}</td> <!-- Hiển thị điểm tổng -->
-                            <td>
-                                <button><i class="fa fa-edit"></i></button>
-                                <button><i class="fa fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
+                    <h2 >{% for subject in subjects %}
+                        {% if subject.mahp == selected_subject %}
+                            <h2 name="mahp" value="{{subject.mahp}}" class="titlee">DANH SÁCH SINH VIÊN MÔN {{ subject.tenhp }} NĂM HỌC 2023-2024</h2>
+                        {% endif %}
+                    {% endfor %}</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>MSSV</th>
+                                <th>Họ và Tên</th>
+                                <th>Lớp</th>
+                                <th>Điểm GK</th>
+                                <th>Điểm CK</th>
+                                <th>Điểm Trung Bình</th> <!-- Thêm cột tổng -->
+                                <th></th> <!-- Thêm cột hành động -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for student in student_list %}
+                            <tr>
+                                <td>{{ student.mssv }}</td>
+                                <td>{{ student.hotensv }}</td>
+                                <td>{{ student.malop }}</td>
+                                <td>{{ student.diem_gk }}</td>
+                                <td>{{ student.diem_ck }}</td>
+                                <td>{{ student.diem_tong }}</td> <!-- Hiển thị điểm tổng -->
+                                <td>
+                                    <button><i class="fa fa-edit"></i></button>
+                                    {% for subject in subjects %}
+                                        {% if subject.mahp == selected_subject %}
+                                    <a href="studentPoint/xoadiem/{{student.mssv}}/{{subject.mahp}}"><i class="fa fa-trash"></i></a>
+                                        {% endif %}
+                                    {%endfor%}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 <button onclick="openForm()" class="add-button"><i class="fa fa-plus"></i></button> <!-- Button thêm -->
 
             </div>
