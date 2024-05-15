@@ -92,6 +92,7 @@ def TrangSinhvien(request):
             sinhVien = f.save(commit=False) 
             sinhVien.phanquyen = phanQuyen
             sinhVien.save()
+            messages.add_message(request, messages.SUCCESS, "Thêm sinh viên thành công")
         else:
             return render(request, 'sinhvien.html', {'danh_sach_sinh_vien': danh_sach_sinh_vien, 'form': f})
     return render(request, 'sinhvien.html', {'danh_sach_sinh_vien': danh_sach_sinh_vien, 'form': form})
@@ -101,6 +102,7 @@ def XoaSinhVien(request):
         mssv = request.POST['mssv']
         sinhVien = Sinhvien.objects.get(mssv=mssv)
         sinhVien.delete()
+        messages.add_message(request, messages.SUCCESS, "Xoá sinh viên thành công")
     return redirect("Sinhvien")
     
 

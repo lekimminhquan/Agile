@@ -186,6 +186,8 @@
 }
 .errorlist li {
   color: red;
+  text-decoration: none;
+  list-style-type: none;
 }
 
 .tuyChon {
@@ -195,3 +197,13 @@
   align-items: center;
   justify-content: center;
 }
+
+.success {
+  color: #270;
+  background-color: #DFF2BF;
+  font-weight: bold;
+  padding: 10px;
+  margin: 10px 0;
+  list-style-type: none;
+}
+

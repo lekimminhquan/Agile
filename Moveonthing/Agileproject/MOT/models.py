@@ -191,11 +191,11 @@ class Phonggiaovu(models.Model):
 
 class Sinhvien(models.Model):
     mssv = models.CharField(primary_key=True, max_length=20)
-    hotensv = models.CharField(max_length=100, blank=True, null=True)
-    ngaysinh = models.DateField(blank=True, null=True)
-    sodienthoai = models.IntegerField(blank=True, null=True)
-    malop = models.ForeignKey(Lop, models.DO_NOTHING, db_column='malop', blank=True, null=True)
-    phanquyen = models.ForeignKey('Taikhoan', models.DO_NOTHING, db_column='phanquyen', to_field='phanquyen', blank=True, null=True)
+    hotensv = models.CharField(max_length=100, blank=False, null=False)
+    ngaysinh = models.DateField(blank=False, null=False)
+    sodienthoai = models.IntegerField(blank=False, null=False)
+    malop = models.ForeignKey(Lop, models.DO_NOTHING, db_column='malop', blank=False, null=False)
+    phanquyen = models.ForeignKey('Taikhoan', models.DO_NOTHING, db_column='phanquyen', to_field='phanquyen', blank=False, null=False)
 
 
 

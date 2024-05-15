@@ -67,6 +67,15 @@
             </div>
             <div class="table-container">
                 <h3 class="title-table">THÔNG TIN SINH VIÊN</h3>
+                <div>
+                    {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            <li class="{{message.tags}}">{{message}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
                 <table>
                     <thead>
                         <tr>
@@ -90,7 +99,7 @@
                                 <button><i class="fa fa-info-circle"></i></button>
                                 <form class="xoa" action="sinhvien/delete" method="POST">
                                     {% csrf_token %}
-                                    <input type="hidden" name="mssv" value="{{sinhvien.mssv}}"/>
+                                    <input type="hidden" name="mssv" value="{{sinhvien.mssv}}" />
                                     <button name="deleteBtn"><i class="fa fa-trash"></i></button>
                                 </form>
                             </td>
@@ -116,9 +125,9 @@
                         <input class="btn-submit-form" type="submit" value="Thêm sinh viên">
                     </div>
                 </form>
-                
+
             </div>
-            
+
         </div>
     </div>
 </body>
