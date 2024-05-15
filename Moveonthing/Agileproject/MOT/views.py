@@ -61,7 +61,7 @@ def Resetpass(request):
 
 def Login(request):
     if request.user.is_authenticated:
-        return redirect('homepage')
+        return redirect('Homepage')
     if request.method == 'POST':
         context = {}
         username = request.POST['username']
