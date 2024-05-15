@@ -177,7 +177,7 @@ def select_subject(request):
                         student_list.append({
                             'mssv': student.mssv,
                             'hotensv': student.hotensv,
-                            'tenlop': student.malop.tenlop,
+                            'malop': student.malop,
                             'diem_gk': diem_gk,
                             'diem_ck': diem_ck,
                             'diem_tong': diem_tong
