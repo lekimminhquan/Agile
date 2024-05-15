@@ -86,9 +86,13 @@
                             <td>{{sinhvien.ngaysinh|date:"d-m-Y"}}</td>
                             <td>{{sinhvien.sodienthoai}}</td>
                             <td>{{sinhvien.malop.malop}}</td>
-                            <td>
+                            <td class="tuyChon">
                                 <button><i class="fa fa-info-circle"></i></button>
-                                <button><i class="fa fa-trash"></i></button>
+                                <form class="xoa" action="sinhvien/delete" method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="mssv" value="{{sinhvien.mssv}}"/>
+                                    <button name="deleteBtn"><i class="fa fa-trash"></i></button>
+                                </form>
                             </td>
                         </tr>
                         {% endfor %}

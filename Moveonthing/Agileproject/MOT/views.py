@@ -96,6 +96,14 @@ def TrangSinhvien(request):
             return render(request, 'sinhvien.html', {'danh_sach_sinh_vien': danh_sach_sinh_vien, 'form': f})
     return render(request, 'sinhvien.html', {'danh_sach_sinh_vien': danh_sach_sinh_vien, 'form': form})
 
+def XoaSinhVien(request):
+    if request.method == "POST":
+        mssv = request.POST['mssv']
+        sinhVien = Sinhvien.objects.get(mssv=mssv)
+        sinhVien.delete()
+    return redirect("Sinhvien")
+    
+
 def searchSinhVien(request):
     query = request.GET.get('query', '')
     sinh_vien_list = Sinhvien.objects.filter(

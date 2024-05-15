@@ -187,3 +187,11 @@
 .errorlist li {
   color: red;
 }
+
+.tuyChon {
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  align-items: center;
+  justify-content: center;
+}
