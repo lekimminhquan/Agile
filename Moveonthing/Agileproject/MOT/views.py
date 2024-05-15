@@ -60,8 +60,10 @@ def Resetpass(request):
         return render(request, 'resetPassword.html')
 
 def Login(request):
-    context = {}
+    if request.user.is_authenticated:
+        return redirect('homepage')
     if request.method == 'POST':
+        context = {}
         username = request.POST['username']
         password = request.POST['password']
         role = request.POST['checka']
