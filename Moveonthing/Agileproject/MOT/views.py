@@ -121,6 +121,23 @@ def searchSinhVien(request):
 
     return JsonResponse(data, safe=False)
 
+def educationprogram(request):
+    departments = Nganh.objects.filter().order_by('manganh')
+    selected_major = request.GET.get('major')
+    
+    # các hocphan từ ngành chọn
+    if selected_major:
+        displayed_courses = Hocphan.objects.filter(manganh=selected_major)
+    else:
+        displayed_courses = Hocphan.objects.none()  # không có học phần hiển thị nếu không chọn ngành
+
+    context = {
+        'departments': departments,
+        'selected_major': selected_major,
+        'displayed_courses': displayed_courses,
+    }
+    
+    return render(request,'educationprogram.html',context)
 def select_subject(request):
     if request.method == 'POST':
         # Kiểm tra nếu request là từ form pop-up

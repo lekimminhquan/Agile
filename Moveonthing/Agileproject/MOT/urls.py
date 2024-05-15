@@ -12,6 +12,7 @@ urlpatterns = [
     path('sinhvien', views.TrangSinhvien, name="Sinhvien"),
     path("sinhvien/delete", views.XoaSinhVien, name="XoaSinhVien"),
     path('sinhvien/search', views.searchSinhVien, name="SearchSinhVien"),
+    path('educationprogram',views.educationprogram,name="educationprogram"),
     path('studentPoint', views.select_subject, name="Studentpoint"),
     
 

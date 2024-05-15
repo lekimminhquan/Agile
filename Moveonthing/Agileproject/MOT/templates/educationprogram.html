@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="static/homepage.css">
-    <script src="homepage.js"></script>
-    <title>System Point Management</title>
+    <link rel="stylesheet" href="static/educationprogram.css">
+    
+    <title>Chương trình đào tạo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
@@ -18,10 +18,50 @@
                         <span class="icon"><i class="fa fa-comments"></i></span>
                         <span class="icon"><i class="fa fa-envelope"></i></span>
                         <span class="icon"><i class="fa fa-bell"></i></span>
+                        
                     </div>
                 </div>
-
-              </div>
+            </div>
+        
+                    
+        <h1>CHƯƠNG TRÌNH ĐÀO TẠO</h1>
+        <form method="GET" action="{% url 'educationprogram' %}">
+            <div class="table">
+                <span>Ngành học:</span>
+                <select name="major" onchange="this.form.submit()">
+                    {% for department in departments %}
+                        <option value="{{ department.manganh }}" {% if selected_major == department.manganh %}selected{% endif %}>
+                            {{ department.tennganh }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </form>
+        
+        <div class="bang">
+            <table>
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Mã học phần</th>
+                        <th>Tên học phần</th>
+                        <th>Số tín chỉ</th>
+                        <th>Điểm</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for course in displayed_courses %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ course.mahp }}</td>
+                        <td>{{ course.tenhp }}</td>
+                        <td>{{ course.sotinchi}}</td>
+                        <td><a href="">Chi tiết</a></td>
+                        
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
                     <!--Sidebar-->
         <nav class="sidebar">
@@ -29,8 +69,8 @@
                 <h2><img src="./static/images/icon-.png" style="width: 24px; height: 24px; vertical-align: middle;" /> HI ADMIN</h2>
                   <a class="active" href="{% url 'Homepage' %}"><i class="fa fa-home"></i> Trang chủ</a>
                   <a href="sinhvien"><i class="fa fa-user"></i> Sinh viên</a>
-                  <a href="educationprogram"><i class="fa-solid fa-list"></i> Chương trình đào tạo</a>
                   <a href="studentPoint"><i class="fa fa-book"></i> Quản lý nhập điểm</a>
+                  <a href="educationprogram"><i class="fa-solid fa-list"></i> Chương trình đào tạo</a>
                   <a href=""><i class="fa fa-file-text"></i> Kết quả tốt nghiệp</a>
                   <a href="{% url 'Logout' %}"><i class="fa fa-sign-out"></i> Đăng xuất</a>
                   <img src="./static/images/logo.png" alt="Logo" class="logo">
@@ -38,6 +78,7 @@
               </div>
           </nav>
           
+    </div>
     </div>
     
 </body>
