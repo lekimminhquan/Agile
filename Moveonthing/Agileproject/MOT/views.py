@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
@@ -120,6 +120,20 @@ def searchSinhVien(request):
     }  for sv in sinh_vien_list]
 
     return JsonResponse(data, safe=False)
+
+def detailStudent(request,mssv):
+     student = get_object_or_404(Sinhvien, mssv=mssv)
+     data = {
+        'mssv': student.mssv,
+        'hotensv': student.hotensv,
+        'ngaysinh': student.ngaysinh.strftime('%d-%m-%Y'),
+        'sodienthoai': student.sodienthoai,
+        'malop': student.malop.malop,
+    }
+     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse(data)
+     return render(request, 'detailStudent.html', {'student': student})
+    
 
 def educationprogram(request):
     departments = Nganh.objects.filter().order_by('manganh')
