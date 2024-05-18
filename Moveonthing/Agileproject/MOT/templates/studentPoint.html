@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <title>Select Subject</title>
+    <title>StudentPoint Management</title>
 </head>
 <body>
     <div class="container">
@@ -32,22 +32,33 @@
                         <span class="icon"><i class="fa fa-bell"></i></span>
                     </div>
                 </div>
-                <!-- ĐỂ TẠM ĐỂ SHOW ĐIỂM SV THEO MÔN -->
-                <h1>DANH SÁCH MÔN HỌC</h1>
-                <form method="POST">
-                    {% csrf_token %}
-                    <select id="subject" name="subject">
+                <h2 id="instruction">Vui lòng chọn ngành và môn học muốn nhập điểm!</h3>
+                <form class="select-container" method="GET" action="{% url 'Studentpoint' %}" onchange="this.form.submit()">
+                    
+                    <!-- Ô select chọn ngành -->
+                    <select id="department" name="department" onchange="this.form.submit()">
+                        <option value="" {% if not selected_department %}selected{% endif %}>-- Chọn ngành --</option>
+                        {% for department in departments %}
+                        <option value="{{ department.manganh }}" {% if department.manganh == selected_department %}selected{% endif %}>{{ department.tennganh }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <!-- Ô select chọn môn học -->
+                    <select id="subject" name="subject"  onchange="this.form.submit()">
+                        <option value="" {% if not selected_subject %}selected{% endif %}>-- Chọn môn học --</option>
                         {% for subject in subjects %}
                         <option value="{{ subject.mahp }}" {% if subject.mahp == selected_subject %}selected{% endif %}>{{ subject.tenhp }}</option>
                         {% endfor %}
                     </select>
                     <!-- Thêm một input hidden để lưu giữ giá trị môn học được chọn -->
+
                     <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
-                    <button type="submit">Hiển Thị</button>
+                    <!-- <button type="submit">Hiển Thị</button> -->
                 </form>
 
-                <div class="popup-form" id="popupForm">
-                    <form method="POST" id="popupForm">
+                <div class="popup-form" id="popupForm" >
+                    <h3>Thêm điểm sinh viên</h3>
+                    <form method="POST" id="popupForm" style="margin-top: 10px;">
                         {% csrf_token %}
                         <!-- Thêm trường ẩn để xác định request từ form pop-up -->
                         <input type="hidden" name="popup_form" value="true">
@@ -55,38 +66,40 @@
                         <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
                         <span class="close" onclick="closeForm()">&times;</span>
                         <!-- Thêm các trường input cho MSSV, Họ tên sinh viên, Điểm GK, Điểm CK -->
-                        <label for="mssv">MSSV:</label>
+                        <label for="mssv">Mã số sinh viên:</label>
                         <input type="text" id="mssv" name="mssv" required>
-                        <label for="diem_gk">Điểm GK:</label>
+                        <label for="diem_gk">Điểm giữa kì:</label>
                         <input type="number" id="diem_gk" name="diem_gk" min="0" max="10" step="0.01" required>
-                        <label for="diem_ck">Điểm CK:</label>
+                        <label for="diem_ck">Điểm cuối kỳ:</label>
                         <input type="number" id="diem_ck" name="diem_ck" min="0" max="10" step="0.01" required>
-                        <button id="submitPopup" type="submit">Submit</button>
+                        <button id="submitPopup" type="submit">Thêm</button>
                     </form>
                     
                 </div>
                 
                 
-                    <h2 >{% for subject in subjects %}
+                    <h2 class="tlt-table">{% for subject in subjects %}
                         {% if subject.mahp == selected_subject %}
-                            <h2 name="mahp" value="{{subject.mahp}}" class="titlee">DANH SÁCH SINH VIÊN MÔN {{ subject.tenhp }} NĂM HỌC 2023-2024</h2>
+                            <h2 name="mahp" value="{{subject.mahp}}" class="titlee">Danh sách điểm sinh viên môn "{{ subject.tenhp }}" năm học 2023-2024</h2>
                         {% endif %}
                     {% endfor %}</h2>
                     <table>
                         <thead>
                             <tr>
+                                <!-- <th>Tên lớp học phần</th> -->
                                 <th>MSSV</th>
                                 <th>Họ và Tên</th>
                                 <th>Lớp</th>
                                 <th>Điểm GK</th>
                                 <th>Điểm CK</th>
                                 <th>Điểm Trung Bình</th> <!-- Thêm cột tổng -->
-                                <th></th> <!-- Thêm cột hành động -->
+                                <th>Tùy chọn</th> <!-- Thêm cột hành động -->
                             </tr>
                         </thead>
                         <tbody>
                             {% for student in student_list %}
                             <tr>
+                                <!-- <td>{{ student.tenlophp }}</td> -->
                                 <td>{{ student.mssv }}</td>
                                 <td>{{ student.hotensv }}</td>
                                 <td>{{ student.malop }}</td>
@@ -112,7 +125,9 @@
     </div>
     
     <script>
-         function openForm() {
+        
+        
+        function openForm() {
             document.getElementById("popupForm").style.display = "block";
         }
 
@@ -132,7 +147,38 @@
                 });
             });
         });
+        window.onload = function() {
+        var departmentSelect = document.getElementById('department');
+        var subjectSelect = document.getElementById('subject');
+        var instruction = document.getElementById('instruction');
+        var addButton = document.querySelector('.add-button');
 
+        // Thiết lập sự kiện onchange cho cả hai ô select
+        departmentSelect.addEventListener('change', checkSelection);
+        subjectSelect.addEventListener('change', checkSelection);
+
+        // Hàm kiểm tra giá trị của hai ô select
+        function checkSelection() {
+            if (departmentSelect.value && subjectSelect.value) {
+                // Nếu cả hai ô select đã có giá trị, ẩn phần tử h3
+                instruction.style.display = 'none';
+                addButton.style.display = 'block';
+            } 
+            else if (!departmentSelect.value && subjectSelect.value) {
+                instruction.textContent = "Vui lòng chọn ngành muốn nhập điểm!";
+            } 
+            else if (departmentSelect.value && !subjectSelect.value) {
+                instruction.textContent = "Vui lòng chọn môn học muốn nhập điểm!";
+            } 
+            else {
+                // Ngược lại, hiển thị phần tử h3
+                instruction.style.display = 'block';
+            }
+        }
+
+        // Kiểm tra trạng thái ban đầu của các ô select khi tải trang
+        checkSelection();
+    };
     </script>
 </body>
 </html>

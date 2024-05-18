@@ -110,38 +110,62 @@
   /* Content */
   .content {
     margin-left: 200px;
-    padding: 5px;
+    padding: 10px;
     background-color: #fff; /* Màu nền trắng */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng */
   }
+ 
   
-.events {
-    background-color: #f9f9f9; /* Màu nền của phần chọn môn học và danh sách sinh viên */
-    border-radius: 10px; /* Bo tròn góc cho phần nội dung */
-}
-/* Định dạng tiêu đề */
-h1 {
-  font-size: 24px;
-  margin: 20px 10px;
-}
+  table {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    width: 100%;
+    margin-top:20px;
+  }
+  
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+ }
+ td button {
+    font-size: 16;
+    padding: 10px 15px;
+    background-color: #e45f5f;
+    margin-left: 5px;
+ }
 
 /* Định dạng phần form */
 form {
   margin-bottom: 20px;
 }
-
+.select-container {
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+}
 /* Định dạng dropdown */
 select {
+  border-radius: 4px;
+  width: calc(50% - 5px); /* 50% width, minus some spacing */
   padding: 8px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 50%;
   margin-bottom: 10px;
 }
 
 /* Định dạng button */
 button {
+  margin:10px 10px;
   padding: 10px 15px;
   font-size: 16px;
   background-color: #d9534f; /* Màu đỏ */
@@ -152,10 +176,14 @@ button {
 }
 /* Định dạng tiêu đề */
 .titlee {
-  text-align: center; /* Căn giữa tiêu đề */
-  font-size: 24px;
-  margin: 20px 0; /* Khoảng cách với các phần khác */
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Bóng cho chữ */
+  color: black;
+  font-weight: bold;
+  padding: 10px;
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+  transition: box-shadow 0.3s ease;
 }
 
 /* Định dạng nút submit khi hover */
@@ -163,23 +191,6 @@ button:hover {
   background-color: #c9302c; /* Màu đỏ nhạt khi hover */
 }
 
-/* CSS cho bảng danh sách sinh viên */
-table {
-  margin-left: 15px;
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px; /* Khoảng cách trên của bảng */
-}
-
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #f2f2f2;
-}
 
 /* CSS cho form pop-up */
 .popup-form {
@@ -193,6 +204,7 @@ th {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   padding: 20px;
   z-index: 9999;
+  border-radius: 10px;
 }
 
 .form-container {
@@ -201,12 +213,28 @@ th {
 }
 
 .close {
+  position: absolute; /* Sử dụng vị trí tuyệt đối */
+  top: 0px; /* Khoảng cách từ phía trên cùng của form */
+  right: 5px; /* Khoảng cách từ phía bên phải của form */
   color: #aaa;
-  float: right;
   font-size: 28px;
   font-weight: bold;
 }
 
+#instruction {
+  background-color: #e45f5f;
+  color: black;
+  font-weight: bold;
+  padding: 10px;
+  margin-top: 20px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Hiệu ứng đổ bóng */
+  transition: box-shadow 0.3s ease;
+}
+#instruction:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Đổ bóng mạnh hơn khi di chuột qua */
+}
 .close:hover,
 .close:focus {
   color: black;
@@ -226,25 +254,32 @@ th {
 input[type="number"] {
   width: 100%; /* Đảm bảo rằng input sẽ mở rộng toàn bộ chiều rộng của parent */
   padding: 8px; /* Kích thước padding cho input */
-  margin-bottom: 10px; /* Khoảng cách giữa các input */
-  border: 1px solid #ccc; /* Định dạng viền của input */
-  border-radius: 4px; /* Bo tròn góc của input */
-  box-sizing: border-box; /* Đảm bảo rằng padding và border không làm thay đổi kích thước của input */
+  margin-bottom: 10px; 
+  border-style: none;
+  border-bottom: 1px solid black;
+  border-radius: 0;
+  box-sizing: border-box; 
 }
 
 /* Định dạng nút submit */
 .popup-form button[type="submit"] {
-  background-color: #4CAF50; /* Màu nền của nút */
-  color: white; /* Màu chữ của nút */
+  width: 100%;
+  color: white;
+  background-color: #333;
+  border-radius: 10px;
+  margin-left: 0px;
   padding: 10px 20px; /* Kích thước padding cho nút */
   border: none; /* Loại bỏ viền */
-  border-radius: 4px; /* Bo tròn góc */
   cursor: pointer; /* Biến con trỏ thành kiểu pointer khi di chuột vào nút */
 }
 
 /* Định dạng hover cho nút submit */
 .popup-form button[type="submit"]:hover {
-  background-color: #45a049; /* Màu nền thay đổi khi hover */
+  color: black;
+  background-color: #e45f5f;/
+}
+.add-button {
+  display: none;
 }
 
   /* Responsive */
