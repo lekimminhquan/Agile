@@ -133,7 +133,7 @@
                                 </button>
                                 {% for subject in subjects %}
                                     {% if subject.mahp == selected_subject %}
-                                <a href="studentPoint/xoadiem/{{student.mssv}}/{{subject.mahp}}"><i class="fa fa-trash"></i></a>
+                                <a href="studentPoint/xoadiem/{{student.mssv}}/{{subject.mahp}}" onclick="thongbao()"><i class="fa fa-trash"></i></a>
                                     {% endif %}
                                 {%endfor%}
                             </td>
@@ -148,6 +148,12 @@
     </div>
     
     <script>
+        function thongbao(){
+                setTimeout(()=>{
+                    alert('Đã xóa thành công ')
+                },2000)
+        }
+        
         function openForm(formId, mssv = '', hotensv = '', malop = '', diem_gk = '', diem_ck = '', diem_tong = '') {
             document.getElementById(formId).style.display = "block";
 
