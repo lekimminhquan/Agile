@@ -192,28 +192,6 @@ def select_subject(request):
             else:
                 message = "Vui lòng chọn môn học tương ứng."
             return JsonResponse({'message': message})
-
-        else:
-            # Xử lý dữ liệu từ form chính
-            mahp = request.POST.get('subject')
-
-            students = Sinhvien.objects.filter(diem__mahp=mahp)
-            student_list = []
-            for student in students:
-                diem = Diem.objects.filter(mssv=student.mssv, mahp=mahp).first()
-                diem_gk = diem.diemgk if diem else 0
-                diem_ck = diem.diemck if diem else 0
-                diem_tong = diem.diemtong
-                student_list.append({
-                    'mssv': student.mssv,
-                    'hotensv': student.hotensv,
-                    'malop': student.malop,
-                    'diem_gk': diem_gk,
-                    'diem_ck': diem_ck,
-                    'diem_tong': diem_tong
-                })
-            subjects = Hocphan.objects.all()
-            return render(request, 'studentPoint.html', {'subjects': subjects, 'student_list': student_list, 'selected_subject': mahp})
     else:
        # Lấy mã ngành từ query parameters
         selected_department = request.GET.get('department')
@@ -237,7 +215,7 @@ def select_subject(request):
                     # tenlop = diem.tenlophp
                     diem_gk = diem.diemgk if diem else 0
                     diem_ck = diem.diemck if diem else 0
-                    diem_tong = round((diem_gk * 0.3) + (diem_ck * 0.7), 2)
+                    diem_tong = diem.diemtong if diem else 0
                     student_list.append({
                         # 'tenlophp' : student.tenlop,
                         'mssv': student.mssv,
