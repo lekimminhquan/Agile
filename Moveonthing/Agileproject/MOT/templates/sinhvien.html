@@ -12,7 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
-    <title>Select Subject</title>
+    <title>Student</title>
     <script>
         $(document).ready(function () {
             $('.search-bar').on('input', function () {
@@ -28,13 +28,18 @@
                                 <td>${sv.sodienthoai}</td>
                                 <td>${sv.malop}</td>
                                 <td>
-                                    <button><i class="fa fa-info-circle"></i></button>
+                                    <button class="info-btn" data-mssv="${sv.mssv}"><i class="fa fa-info-circle"></i></button>
                                     <button><i class="fa fa-trash"></i></button>
                                 </td>
                             </tr>`
                         );
                     });
                 });
+            });
+            $(document).on('click', '.info-btn', function () {
+                let mssv = $(this).data('mssv');
+                let detailUrl = "{% url 'detailStudent' 'REPLACE_MSSV' %}".replace('REPLACE_MSSV', mssv);
+                window.location.href = detailUrl;
             });
         });
     </script>
@@ -97,7 +102,7 @@
                             <td>{{sinhvien.sodienthoai}}</td>
                             <td>{{sinhvien.malop.malop}}</td>
                             <td class="tuyChon">
-                                <button><i class="fa fa-info-circle"></i></button>
+                                <button class="info-btn" data-mssv="{{sinhvien.mssv}}"><i class="fa fa-info-circle"></i> </button>
                                 <form class="xoa" action="sinhvien/delete" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="mssv" value="{{sinhvien.mssv}}" />
