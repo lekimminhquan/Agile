@@ -110,7 +110,7 @@
   /* Content */
   .content {
     margin-left: 200px;
-    padding: 5px;
+    padding: 10px;
     background-color: #fff; /* Màu nền trắng */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng */
   }
@@ -206,4 +206,26 @@
   margin: 10px 0;
   list-style-type: none;
 }
+
+.student-info-container {
+    display: flex;
+    flex-direction: row;
+ }
+
+.list-student {
+  margin-left:300px;
+  margin-top: 55px;
+}
+.list-student button{
+    font-size: 16;
+    padding: 10px 30px;
+    background-color: #e45f5f;
+}
+.student-image img{
+  margin-left: 20px;
+  margin-top: 60px;
+}
+
+
+
 

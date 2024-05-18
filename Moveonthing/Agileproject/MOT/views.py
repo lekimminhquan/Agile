@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth import authenticate, login, logout
@@ -121,6 +121,20 @@ def searchSinhVien(request):
 
     return JsonResponse(data, safe=False)
 
+def detailStudent(request,mssv):
+     student = get_object_or_404(Sinhvien, mssv=mssv)
+     data = {
+        'mssv': student.mssv,
+        'hotensv': student.hotensv,
+        'ngaysinh': student.ngaysinh.strftime('%d-%m-%Y'),
+        'sodienthoai': student.sodienthoai,
+        'malop': student.malop.malop,
+    }
+     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse(data)
+     return render(request, 'detailStudent.html', {'student': student})
+    
+
 def educationprogram(request):
     departments = Nganh.objects.filter().order_by('manganh')
     selected_major = request.GET.get('major')
@@ -138,6 +152,7 @@ def educationprogram(request):
     }
     
     return render(request,'educationprogram.html',context)
+
 def select_subject(request):
     if request.method == 'POST':
         # Kiểm tra nếu request là từ form pop-up
@@ -148,33 +163,34 @@ def select_subject(request):
             diem_tong = float(request.POST.get('diem_tong'))
             mahp = request.POST.get('selected_subject')
             is_update = request.POST.get('is_update', 'false') == 'true'
-
-            # Kiểm tra sinh viên tồn tại trong CSDL
-            sinhvien = Sinhvien.objects.filter(mssv=mssv).first()
-            if sinhvien:
-                # Kiểm tra nếu đây là yêu cầu cập nhật
-                if is_update:
-                    # Cập nhật điểm cho sinh viên
-                    diem = Diem.objects.filter(mssv=sinhvien, mahp_id=mahp).first()
-                    if diem:
-                        diem.diemgk = diem_gk
-                        diem.diemck = diem_ck
-                        diem.diemtong = diem_tong
-                        diem.save()
-                        message = "Cập nhật điểm SV thành công."
+            if mahp:
+                # Kiểm tra sinh viên tồn tại trong CSDL
+                sinhvien = Sinhvien.objects.filter(mssv=mssv).first()
+                if sinhvien:
+                    # Kiểm tra nếu đây là yêu cầu cập nhật
+                    if is_update:
+                        # Cập nhật điểm cho sinh viên
+                        diem = Diem.objects.filter(mssv=sinhvien, mahp_id=mahp).first()
+                        if diem:
+                            diem.diemgk = diem_gk
+                            diem.diemck = diem_ck
+                            diem.diemtong = diem_tong
+                            diem.save()
+                            message = "Cập nhật điểm SV thành công."
+                        else:
+                            message = "Không tìm thấy điểm của sinh viên để cập nhật."
                     else:
-                        message = "Không tìm thấy điểm của sinh viên để cập nhật."
+                        # Kiểm tra xem sinh viên đã có điểm ở môn này chưa
+                        if not Diem.objects.filter(mssv=sinhvien, mahp_id=mahp).exists():
+                            # Thêm điểm mới vào CSDL
+                            new_diem = Diem.objects.create(mssv=sinhvien, mahp_id=mahp, diemgk=diem_gk, diemck=diem_ck, diemtong = diem_tong)
+                            message = "Thêm điểm SV thành công."
+                        else:
+                            message = "Sinh viên đã có điểm ở môn này."
                 else:
-                    # Kiểm tra xem sinh viên đã có điểm ở môn này chưa
-                    if not Diem.objects.filter(mssv=sinhvien, mahp_id=mahp).exists():
-                        # Thêm điểm mới vào CSDL
-                        new_diem = Diem.objects.create(mssv=sinhvien, mahp_id=mahp, diemgk=diem_gk, diemck=diem_ck, diemtong = diem_tong)
-                        message = "Thêm điểm SV thành công."
-                    else:
-                        message = "Sinh viên đã có điểm ở môn này."
+                    message = "Sinh viên không tồn tại."
             else:
-                message = "Sinh viên không tồn tại."
-
+                message = "Vui lòng chọn môn học tương ứng."
             return JsonResponse({'message': message})
 
         else:
@@ -198,9 +214,53 @@ def select_subject(request):
                 })
             subjects = Hocphan.objects.all()
             return render(request, 'studentPoint.html', {'subjects': subjects, 'student_list': student_list, 'selected_subject': mahp})
-
     else:
-        # Nếu là GET request, chỉ hiển thị form chọn môn học
-        subjects = Hocphan.objects.all()
-        return render(request, 'studentPoint.html', {'subjects': subjects})
+       # Lấy mã ngành từ query parameters
+        selected_department = request.GET.get('department')
+        
+        # Truy vấn các ngành học từ CSDL
+        departments = Nganh.objects.all()
+        
+        # Nếu người dùng đã chọn mã ngành
+        if selected_department:
+            # Lọc danh sách các môn học dựa trên mã ngành đã chọn
+            subjects = Hocphan.objects.filter(manganh=selected_department)
+            
+            # Lấy mã học phần từ query parameters
+            mahp = request.GET.get('subject')
+            
+            if mahp:
+                students = Sinhvien.objects.filter(diem__mahp=mahp, malop__manganh=selected_department)
+                student_list = []
+                for student in students:
+                    diem = Diem.objects.filter(mssv=student.mssv, mahp=mahp).first()
+                    # tenlop = diem.tenlophp
+                    diem_gk = diem.diemgk if diem else 0
+                    diem_ck = diem.diemck if diem else 0
+                    diem_tong = round((diem_gk * 0.3) + (diem_ck * 0.7), 2)
+                    student_list.append({
+                        # 'tenlophp' : student.tenlop,
+                        'mssv': student.mssv,
+                        'hotensv': student.hotensv,
+                        'malop': student.malop,
+                        'diem_gk': diem_gk,
+                        'diem_ck': diem_ck,
+                        'diem_tong': diem_tong
+                    })
+                
+                return render(request, 'studentPoint.html', {'departments': departments,'subjects': subjects, 'student_list': student_list, 'selected_subject': mahp, 'selected_department': selected_department})
+            
+            else:
+                # Trường hợp không có mã học phần được chọn, hiển thị danh sách môn học của ngành đó
+                return render(request, 'studentPoint.html', {'departments': departments,'subjects': subjects,'selected_department': selected_department})
+        
+        else:
+            # Trường hợp không có mã ngành được chọn, hiển thị ô select-department và danh sách môn học trống
+            subjects = []
+            return render(request, 'studentPoint.html', {'departments': departments,'subjects': subjects})
     
+def Xoadiemsinhvien(request,mssv_id,mahp_id):
+    if request.method == "GET":
+        diem = Diem.objects.get(mssv=mssv_id,mahp = mahp_id)
+        diem.delete()
+    return redirect('Studentpoint')

@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-    <title>Select Subject</title>
+    <title>StudentPoint Management</title>
 </head>
 <body>
     <div class="container">
@@ -32,65 +32,38 @@
                         <span class="icon"><i class="fa fa-bell"></i></span>
                     </div>
                 </div>
-                <h1>DANH SÁCH MÔN HỌC</h1>
-                <form method="POST">
-                    {% csrf_token %}
-                    <select id="subject" name="subject">
+                <h2 id="instruction">Vui lòng chọn ngành và môn học muốn nhập điểm!</h3>
+                <form class="select-container" method="GET" action="{% url 'Studentpoint' %}" onchange="this.form.submit()">
+                    
+                    <!-- Ô select chọn ngành -->
+                    <select id="department" name="department" onchange="this.form.submit()">
+                        <option value="" {% if not selected_department %}selected{% endif %}>-- Chọn ngành --</option>
+                        {% for department in departments %}
+                        <option value="{{ department.manganh }}" {% if department.manganh == selected_department %}selected{% endif %}>{{ department.tennganh }}</option>
+                        {% endfor %}
+                    </select>
+                    
+                    <!-- Ô select chọn môn học -->
+                    <select id="subject" name="subject"  onchange="this.form.submit()">
+                        <option value="" {% if not selected_subject %}selected{% endif %}>-- Chọn môn học --</option>
                         {% for subject in subjects %}
                         <option value="{{ subject.mahp }}" {% if subject.mahp == selected_subject %}selected{% endif %}>{{ subject.tenhp }}</option>
                         {% endfor %}
                     </select>
+                    <!-- Thêm một input hidden để lưu giữ giá trị môn học được chọn -->
+
                     <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
-                    <button type="submit">Hiển Thị</button>
+                    <!-- <button type="submit">Hiển Thị</button> -->
                 </form>
-
-                <h2>{% for subject in subjects %}
-                    {% if subject.mahp == selected_subject %}
-                        <h2 class="titlee">DANH SÁCH SINH VIÊN MÔN {{ subject.tenhp | upper }} NĂM HỌC 2023-2024</h2>
-                    {% endif %}
-                {% endfor %}</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>MSSV</th>
-                            <th>Họ và Tên</th>
-                            <th>Lớp</th>
-                            <th>Điểm GK</th>
-                            <th>Điểm CK</th>
-                            <th>Điểm Trung Bình</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for student in student_list %}
-                        <tr>
-                            <td>{{ student.mssv }}</td>
-                            <td>{{ student.hotensv }}</td>
-                            <td>{{ student.malop }}</td>
-                            <td>{{ student.diem_gk }}</td>
-                            <td>{{ student.diem_ck }}</td>
-                            <td>{{ student.diem_tong }}</td>
-                            <td>
-                                <button onclick="openForm('updateForm', '{{ student.mssv }}', '{{ student.hotensv }}', '{{ student.malop }}', '{{ student.diem_gk }}', '{{ student.diem_ck }}', '{{ student.diem_tong }}')" class="update-button">
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                                <button><i class="fa fa-trash"></i></button>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-
-                <button onclick="openForm('addForm')" class="add-button"><i class="fa fa-plus"></i></button>
-
-                <div class="popup-form" id="addForm" style="display: none;">
-                    <form method="POST" id="addFormContent">
+                <div class="popup-form" id="addForm">
+                    <h3>Thêm điểm sinh viên</h3>
+                    <form method="POST" id="addFormContent" style="margin-top: 10px;">
                         {% csrf_token %}
                         <input type="hidden" name="popup_form" value="true">
                         <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
                         <input type="hidden" name="is_update" value="false">
                         <span class="close" onclick="closeForm('addForm')">&times;</span>
-                        <label for="add_mssv">MSSV:</label>
+                        <label for="add_mssv">Mã số sinh viên:</label>
                         <input type="text" id="add_mssv" name="mssv" required>
                         <label for="add_diem_gk">Điểm GK:</label>
                         <input type="number" id="add_diem_gk" name="diem_gk" min="0" max="10" step="0.01" required>
@@ -102,14 +75,15 @@
                     </form>
                 </div>
 
-                <div class="popup-form" id="updateForm" style="display: none;">
-                    <form method="POST" id="updateFormContent">
+                <div class="popup-form" id="updateForm">
+                    <h3>Cập nhật điểm sinh viên</h3>
+                    <form method="POST" id="updateFormContent" style="margin-top: 10px;">
                         {% csrf_token %}
                         <input type="hidden" name="popup_form" value="true">
                         <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
                         <input type="hidden" name="is_update" value="true">
                         <span class="close" onclick="closeForm('updateForm')">&times;</span>
-                        <label for="update_mssv">MSSV:</label>
+                        <label for="update_mssv">Mã số sinh viên:</label>
                         <input type="text" id="update_mssv" name="mssv" readonly required>
                         <label for="update_hotensv">Họ và Tên:</label>
                         <input type="text" id="update_hotensv" name="hotensv" readonly required>
@@ -124,7 +98,51 @@
                         <button id="submitUpdatePopup" type="submit">Submit</button>
                     </form>
                 </div>
-
+                
+                <h2 class="tlt-table">{% for subject in subjects %}
+                    {% if subject.mahp == selected_subject %}
+                        <h2 name="mahp" value="{{subject.mahp}}" class="titlee">Danh sách điểm sinh viên môn "{{ subject.tenhp }}" năm học 2023-2024</h2>
+                    {% endif %}
+                {% endfor %}</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <!-- <th>Tên lớp học phần</th> -->
+                            <th>MSSV</th>
+                            <th>Họ và Tên</th>
+                            <th>Lớp</th>
+                            <th>Điểm GK</th>
+                            <th>Điểm CK</th>
+                            <th>Điểm Trung Bình</th> <!-- Thêm cột tổng -->
+                            <th>Tùy chọn</th> <!-- Thêm cột hành động -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in student_list %}
+                        <tr>
+                            <!-- <td>{{ student.tenlophp }}</td> -->
+                            <td>{{ student.mssv }}</td>
+                            <td>{{ student.hotensv }}</td>
+                            <td>{{ student.malop }}</td>
+                            <td>{{ student.diem_gk }}</td>
+                            <td>{{ student.diem_ck }}</td>
+                            <td>{{ student.diem_tong }}</td> <!-- Hiển thị điểm tổng -->
+                            <td>
+                                <button onclick="openForm('updateForm', '{{ student.mssv }}', '{{ student.hotensv }}', '{{ student.malop }}', '{{ student.diem_gk }}', '{{ student.diem_ck }}', '{{ student.diem_tong }}')" class="update-button">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                {% for subject in subjects %}
+                                    {% if subject.mahp == selected_subject %}
+                                <a href="studentPoint/xoadiem/{{student.mssv}}/{{subject.mahp}}"><i class="fa fa-trash"></i></a>
+                                    {% endif %}
+                                {%endfor%}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <button onclick="openForm('addForm')" class="add-button"><i class="fa fa-plus"></i></button> <!-- Button thêm -->
+                
             </div>
         </div>
     </div>
@@ -152,6 +170,38 @@
                 this.form.submit();
             });
         });
+        window.onload = function() {
+        var departmentSelect = document.getElementById('department');
+        var subjectSelect = document.getElementById('subject');
+        var instruction = document.getElementById('instruction');
+        var addButton = document.querySelector('.add-button');
+
+        // Thiết lập sự kiện onchange cho cả hai ô select
+        departmentSelect.addEventListener('change', checkSelection);
+        subjectSelect.addEventListener('change', checkSelection);
+
+        // Hàm kiểm tra giá trị của hai ô select
+        function checkSelection() {
+            if (departmentSelect.value && subjectSelect.value) {
+                // Nếu cả hai ô select đã có giá trị, ẩn phần tử h3
+                instruction.style.display = 'none';
+                addButton.style.display = 'block';
+            } 
+            else if (!departmentSelect.value && subjectSelect.value) {
+                instruction.textContent = "Vui lòng chọn ngành muốn nhập điểm!";
+            } 
+            else if (departmentSelect.value && !subjectSelect.value) {
+                instruction.textContent = "Vui lòng chọn môn học muốn nhập điểm!";
+            } 
+            else {
+                // Ngược lại, hiển thị phần tử h3
+                instruction.style.display = 'block';
+            }
+        }
+
+        // Kiểm tra trạng thái ban đầu của các ô select khi tải trang
+        checkSelection();
+    };
     </script>
 </body>
 </html>
