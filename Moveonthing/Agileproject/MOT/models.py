@@ -83,6 +83,7 @@ class Diem(models.Model):
     mahp = models.ForeignKey('Hocphan', models.DO_NOTHING, db_column='mahp')
     diemgk = models.FloatField(blank=True, null=True)
     diemck = models.FloatField(blank=True, null=True)
+    diemtong = models.FloatField(blank=True, null=True)
 
     class Meta:
         managed = False

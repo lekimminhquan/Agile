@@ -22,7 +22,7 @@
             <img src="./static/images/logo.png" alt="Logo" class="logo">
         </nav>
 
-        <div class="content" >
+        <div class="content">
             <div class="events">
                 <div class="event">
                     <div class="header-icons">
@@ -32,7 +32,6 @@
                         <span class="icon"><i class="fa fa-bell"></i></span>
                     </div>
                 </div>
-                <!-- ĐỂ TẠM ĐỂ SHOW ĐIỂM SV THEO MÔN -->
                 <h1>DANH SÁCH MÔN HỌC</h1>
                 <form method="POST">
                     {% csrf_token %}
@@ -41,36 +40,13 @@
                         <option value="{{ subject.mahp }}" {% if subject.mahp == selected_subject %}selected{% endif %}>{{ subject.tenhp }}</option>
                         {% endfor %}
                     </select>
-                    <!-- Thêm một input hidden để lưu giữ giá trị môn học được chọn -->
                     <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
                     <button type="submit">Hiển Thị</button>
                 </form>
 
-                <div class="popup-form" id="popupForm">
-                    <form method="POST" id="popupForm">
-                        {% csrf_token %}
-                        <!-- Thêm trường ẩn để xác định request từ form pop-up -->
-                        <input type="hidden" name="popup_form" value="true">
-                        <!-- Truyền giá trị selected_subject từ ô select vào các trường input trong form pop-up -->
-                        <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
-                        <span class="close" onclick="closeForm()">&times;</span>
-                        <!-- Thêm các trường input cho MSSV, Họ tên sinh viên, Điểm GK, Điểm CK -->
-                        <label for="mssv">MSSV:</label>
-                        <input type="text" id="mssv" name="mssv" required>
-                        <label for="diem_gk">Điểm GK:</label>
-                        <input type="number" id="diem_gk" name="diem_gk" min="0" max="10" step="0.01" required>
-                        <label for="diem_ck">Điểm CK:</label>
-                        <input type="number" id="diem_ck" name="diem_ck" min="0" max="10" step="0.01" required>
-                        <button id="submitPopup" type="submit">Submit</button>
-                    </form>
-                    
-                </div>
-                
-                
-                
-                <h2 >{% for subject in subjects %}
+                <h2>{% for subject in subjects %}
                     {% if subject.mahp == selected_subject %}
-                        <h2 class="titlee">DANH SÁCH SINH VIÊN MÔN {{ subject.tenhp }} NĂM HỌC 2023-2024</h2>
+                        <h2 class="titlee">DANH SÁCH SINH VIÊN MÔN {{ subject.tenhp | upper }} NĂM HỌC 2023-2024</h2>
                     {% endif %}
                 {% endfor %}</h2>
                 <table>
@@ -81,8 +57,8 @@
                             <th>Lớp</th>
                             <th>Điểm GK</th>
                             <th>Điểm CK</th>
-                            <th>Điểm Trung Bình</th> <!-- Thêm cột tổng -->
-                            <th></th> <!-- Thêm cột hành động -->
+                            <th>Điểm Trung Bình</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,9 +69,11 @@
                             <td>{{ student.malop }}</td>
                             <td>{{ student.diem_gk }}</td>
                             <td>{{ student.diem_ck }}</td>
-                            <td>{{ student.diem_tong }}</td> <!-- Hiển thị điểm tổng -->
+                            <td>{{ student.diem_tong }}</td>
                             <td>
-                                <button><i class="fa fa-edit"></i></button>
+                                <button onclick="openForm('updateForm', '{{ student.mssv }}', '{{ student.hotensv }}', '{{ student.malop }}', '{{ student.diem_gk }}', '{{ student.diem_ck }}', '{{ student.diem_tong }}')" class="update-button">
+                                    <i class="fa fa-edit"></i>
+                                </button>
                                 <button><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
@@ -103,34 +81,77 @@
                     </tbody>
                 </table>
 
-                <button onclick="openForm()" class="add-button"><i class="fa fa-plus"></i></button> <!-- Button thêm -->
+                <button onclick="openForm('addForm')" class="add-button"><i class="fa fa-plus"></i></button>
+
+                <div class="popup-form" id="addForm" style="display: none;">
+                    <form method="POST" id="addFormContent">
+                        {% csrf_token %}
+                        <input type="hidden" name="popup_form" value="true">
+                        <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
+                        <input type="hidden" name="is_update" value="false">
+                        <span class="close" onclick="closeForm('addForm')">&times;</span>
+                        <label for="add_mssv">MSSV:</label>
+                        <input type="text" id="add_mssv" name="mssv" required>
+                        <label for="add_diem_gk">Điểm GK:</label>
+                        <input type="number" id="add_diem_gk" name="diem_gk" min="0" max="10" step="0.01" required>
+                        <label for="add_diem_ck">Điểm CK:</label>
+                        <input type="number" id="add_diem_ck" name="diem_ck" min="0" max="10" step="0.01" required>
+                        <label for="add_diem_tong">Điểm Trung Bình:</label>
+                        <input type="number" id="add_diem_tong" name="diem_tong" min="0" max="10" step="0.01" required>
+                        <button id="submitAddPopup" type="submit">Submit</button>
+                    </form>
+                </div>
+
+                <div class="popup-form" id="updateForm" style="display: none;">
+                    <form method="POST" id="updateFormContent">
+                        {% csrf_token %}
+                        <input type="hidden" name="popup_form" value="true">
+                        <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
+                        <input type="hidden" name="is_update" value="true">
+                        <span class="close" onclick="closeForm('updateForm')">&times;</span>
+                        <label for="update_mssv">MSSV:</label>
+                        <input type="text" id="update_mssv" name="mssv" readonly required>
+                        <label for="update_hotensv">Họ và Tên:</label>
+                        <input type="text" id="update_hotensv" name="hotensv" readonly required>
+                        <label for="update_malop">Lớp:</label>
+                        <input type="text" id="update_malop" name="malop" readonly required>
+                        <label for="update_diem_gk">Điểm GK:</label>
+                        <input type="number" id="update_diem_gk" name="diem_gk" min="0" max="10" step="0.01" required>
+                        <label for="update_diem_ck">Điểm CK:</label>
+                        <input type="number" id="update_diem_ck" name="diem_ck" min="0" max="10" step="0.01" required>
+                        <label for="update_diem_tong">Điểm Trung Bình:</label>
+                        <input type="number" id="update_diem_tong" name="diem_tong" min="0" max="10" step="0.01" required>
+                        <button id="submitUpdatePopup" type="submit">Submit</button>
+                    </form>
+                </div>
 
             </div>
         </div>
     </div>
     
     <script>
-         function openForm() {
-            document.getElementById("popupForm").style.display = "block";
+        function openForm(formId, mssv = '', hotensv = '', malop = '', diem_gk = '', diem_ck = '', diem_tong = '') {
+            document.getElementById(formId).style.display = "block";
+
+            if (formId === 'updateForm') {
+                document.getElementById('update_mssv').value = mssv;
+                document.getElementById('update_hotensv').value = hotensv;
+                document.getElementById('update_malop').value = malop;
+                document.getElementById('update_diem_gk').value = diem_gk;
+                document.getElementById('update_diem_ck').value = diem_ck;
+                document.getElementById('update_diem_tong').value = diem_tong;
+            }
         }
 
-        function closeForm() {
-            document.getElementById("popupForm").style.display = "none";
+        function closeForm(formId) {
+            document.getElementById(formId).style.display = "none";
         }
+
         $(document).ready(function() {
-            // Bắt sự kiện khi form pop-up submit
-            $('#popupForm form').submit(function(event) {
-                event.preventDefault(); // Ngăn chặn hành động mặc định của form
-                var formData = $(this).serialize(); // Lấy dữ liệu từ form
-
-                // Gửi request POST đến server
-                $.post('', formData, function(data) {
-                    // Hiển thị thông điệp từ server
-                    alert(data.message);
-                });
+            $('#subject').on('change', function() {
+                this.form.submit();
             });
         });
-
     </script>
 </body>
 </html>

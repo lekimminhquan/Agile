@@ -145,45 +145,59 @@ def select_subject(request):
             mssv = request.POST.get('mssv')
             diem_gk = float(request.POST.get('diem_gk'))
             diem_ck = float(request.POST.get('diem_ck'))
+            diem_tong = float(request.POST.get('diem_tong'))
             mahp = request.POST.get('selected_subject')
+            is_update = request.POST.get('is_update', 'false') == 'true'
 
             # Kiểm tra sinh viên tồn tại trong CSDL
             sinhvien = Sinhvien.objects.filter(mssv=mssv).first()
             if sinhvien:
-                # Kiểm tra xem sinh viên đã có điểm ở môn này chưa
-                if not Diem.objects.filter(mssv=sinhvien, mahp_id=mahp).exists():
-                    # Thêm điểm mới vào CSDL
-                    new_diem = Diem.objects.create(mssv=sinhvien, mahp_id=mahp, diemgk=diem_gk, diemck=diem_ck)
-                    message = "Thêm điểm SV thành công."
+                # Kiểm tra nếu đây là yêu cầu cập nhật
+                if is_update:
+                    # Cập nhật điểm cho sinh viên
+                    diem = Diem.objects.filter(mssv=sinhvien, mahp_id=mahp).first()
+                    if diem:
+                        diem.diemgk = diem_gk
+                        diem.diemck = diem_ck
+                        diem.diemtong = diem_tong
+                        diem.save()
+                        message = "Cập nhật điểm SV thành công."
+                    else:
+                        message = "Không tìm thấy điểm của sinh viên để cập nhật."
                 else:
-                    message = "Sinh viên đã có điểm ở môn này."
+                    # Kiểm tra xem sinh viên đã có điểm ở môn này chưa
+                    if not Diem.objects.filter(mssv=sinhvien, mahp_id=mahp).exists():
+                        # Thêm điểm mới vào CSDL
+                        new_diem = Diem.objects.create(mssv=sinhvien, mahp_id=mahp, diemgk=diem_gk, diemck=diem_ck, diemtong = diem_tong)
+                        message = "Thêm điểm SV thành công."
+                    else:
+                        message = "Sinh viên đã có điểm ở môn này."
             else:
                 message = "Sinh viên không tồn tại."
 
             return JsonResponse({'message': message})
 
         else:
-                    # Xử lý dữ liệu từ form chính
-                    # Lấy mã học phần từ form
-                    mahp = request.POST.get('subject')
+            # Xử lý dữ liệu từ form chính
+            mahp = request.POST.get('subject')
 
-                    students = Sinhvien.objects.filter(diem__mahp=mahp)
-                    student_list = []
-                    for student in students:
-                        diem = Diem.objects.filter(mssv=student.mssv, mahp=mahp).first()
-                        diem_gk = diem.diemgk if diem else 0
-                        diem_ck = diem.diemck if diem else 0
-                        diem_tong = round((diem_gk * 0.3) + (diem_ck * 0.7), 2)
-                        student_list.append({
-                            'mssv': student.mssv,
-                            'hotensv': student.hotensv,
-                            'malop': student.malop,
-                            'diem_gk': diem_gk,
-                            'diem_ck': diem_ck,
-                            'diem_tong': diem_tong
-                        })
-                    subjects = Hocphan.objects.all()
-                    return render(request, 'studentPoint.html', {'subjects': subjects, 'student_list': student_list, 'selected_subject': mahp})
+            students = Sinhvien.objects.filter(diem__mahp=mahp)
+            student_list = []
+            for student in students:
+                diem = Diem.objects.filter(mssv=student.mssv, mahp=mahp).first()
+                diem_gk = diem.diemgk if diem else 0
+                diem_ck = diem.diemck if diem else 0
+                diem_tong = diem.diemtong
+                student_list.append({
+                    'mssv': student.mssv,
+                    'hotensv': student.hotensv,
+                    'malop': student.malop,
+                    'diem_gk': diem_gk,
+                    'diem_ck': diem_ck,
+                    'diem_tong': diem_tong
+                })
+            subjects = Hocphan.objects.all()
+            return render(request, 'studentPoint.html', {'subjects': subjects, 'student_list': student_list, 'selected_subject': mahp})
 
     else:
         # Nếu là GET request, chỉ hiển thị form chọn môn học
