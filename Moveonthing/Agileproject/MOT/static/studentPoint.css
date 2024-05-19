@@ -276,7 +276,7 @@ input[type="number"] {
 /* Định dạng hover cho nút submit */
 .popup-form button[type="submit"]:hover {
   color: black;
-  background-color: #e45f5f;/
+  background-color: #e45f5f;
 }
 .add-button {
   display: none;

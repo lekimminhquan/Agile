@@ -65,6 +65,8 @@
                         <span class="close" onclick="closeForm('addForm')">&times;</span>
                         <label for="add_mssv">Mã số sinh viên:</label>
                         <input type="text" id="add_mssv" name="mssv" required>
+                        <label for="add_mssv">Tên lớp học phần :</label>
+                        <input type="text" id="add_tenlophp" name="tenlophp" required>
                         <label for="add_diem_gk">Điểm GK:</label>
                         <input type="number" id="add_diem_gk" name="diem_gk" min="0" max="10" step="0.01" required>
                         <label for="add_diem_ck">Điểm CK:</label>
@@ -98,19 +100,24 @@
                         <button id="submitUpdatePopup" type="submit">Submit</button>
                     </form>
                 </div>
-                <div id="popdel" class="modal" tabindex="-1" role="dialog" style ="position: absolute; top: 400px ; left:900px ;visibility: hidden;">
-                    <div class="modal-dialog" role="document" style="border: 1px solid black">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title">Xóa sinh viên ra khỏi lớp</h5>
+                <div id="popdel" class="modal" tabindex="-1" role="dialog" style="position: absolute; visibility: hidden; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1050; width: 80%; max-width: 600px; box-shadow: 0 5px 15px rgba(0,0,0,.5); background-color: #fff; border-radius: 8px;">
+                    <div class="modal-dialog" role="document" style="border: none; padding: 20px;">
+                        <div class="modal-content" style="border: none; border-radius: 8px;">
+                            <div class="modal-header" style="border-bottom: 1px solid #e5e5e5; padding-bottom: 10px;">
+                                {% for subject in subjects %}
+                                    {% if subject.mahp == selected_subject %}
+                                    <h5 class="modal-title" style="font-size: 1.25rem; font-weight: bold;">Bạn có chắc chắc muốn xóa sinh viên này ra khỏi học phần {{ subject.tenhp | upper }} không?</h5>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            <div class="modal-footer" style="border-top: 1px solid #e5e5e5; padding-top: 10px; display: flex; justify-content: flex-end; gap: 10px;">
+                                <button type="button" class="btn btn-primary" id="nutsave" style="padding: 10px 20px; border: none; border-radius: 4px; background-color: #e45f5f;; color: #fff; cursor: pointer; font-size: 1rem;">Xác nhận</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal" id="nuttat" onclick="tat()" style="padding: 10px 20px; border: none; border-radius: 4px; background-color: #333; color: #fff; cursor: pointer; font-size: 1rem;">Hủy bỏ</button>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="nuttat" onclick="tat()">Close</button>
-                          <button type="button" class="btn btn-primary" id="nutsave">Save changes</button>
-                        </div>
-                      </div>
                     </div>
-                  </div>
+                </div>
+                
                 <h2 class="tlt-table">{% for subject in subjects %}
                     {% if subject.mahp == selected_subject %}
                         <h2 name="mahp" value="{{subject.mahp}}" class="titlee">DANH SÁCH ĐIỂM SINH VIÊN MÔN "{{ subject.tenhp | upper }}" NĂM HỌC 2023-2024</h2>
@@ -119,7 +126,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <!-- <th>Tên lớp học phần</th> -->
+                            <th>Tên lớp học phần</th>
                             <th>MSSV</th>
                             <th>Họ và Tên</th>
                             <th>Lớp</th>
@@ -132,7 +139,7 @@
                     <tbody>
                         {% for student in student_list %}
                         <tr>
-                            <!-- <td>{{ student.tenlophp }}</td> -->
+                            <td>{{ student.tenlophp }}</td>
                             <td>{{ student.mssv }}</td>
                             <td>{{ student.hotensv }}</td>
                             <td>{{ student.malop }}</td>
