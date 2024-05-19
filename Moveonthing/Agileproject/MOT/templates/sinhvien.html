@@ -77,10 +77,17 @@
                     {% if messages %}
                     <ul class="messages">
                         {% for message in messages %}
-                            <li class="{{message.tags}}">{{message}}</li>
+                        <li class="{{message.tags}}">{{message}}</li>
                         {% endfor %}
                     </ul>
                     {% endif %}
+                    {% for field in form %}
+                    <ul class="errorlist">
+                        {% for error in field.errors %}
+                        <li>{{error}}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endfor %}
                 </div>
                 <table>
                     <thead>
@@ -102,7 +109,8 @@
                             <td>{{sinhvien.sodienthoai}}</td>
                             <td>{{sinhvien.malop.malop}}</td>
                             <td class="tuyChon">
-                                <button class="info-btn" data-mssv="{{sinhvien.mssv}}"><i class="fa fa-info-circle"></i> </button>
+                                <button class="info-btn" data-mssv="{{sinhvien.mssv}}"><i class="fa fa-info-circle"></i>
+                                </button>
                                 <form class="xoa" action="sinhvien/delete" method="POST">
                                     {% csrf_token %}
                                     <input type="hidden" name="mssv" value="{{sinhvien.mssv}}" />
