@@ -163,6 +163,7 @@ def select_subject(request):
             diem_tong = float(request.POST.get('diem_tong'))
             mahp = request.POST.get('selected_subject')
             is_update = request.POST.get('is_update', 'false') == 'true'
+            reload_page = False
             if mahp:
                 # Kiểm tra sinh viên tồn tại trong CSDL
                 sinhvien = Sinhvien.objects.filter(mssv=mssv).first()
@@ -177,6 +178,7 @@ def select_subject(request):
                             diem.diemtong = diem_tong
                             diem.save_base(force_update=is_update)
                             message = "Cập nhật điểm SV thành công."
+                            reload_page = True
                         else:
                             message = "Không tìm thấy điểm của sinh viên để cập nhật."
                     else:
@@ -185,13 +187,14 @@ def select_subject(request):
                             # Thêm điểm mới vào CSDL
                             new_diem = Diem.objects.create(mssv=sinhvien, mahp_id=mahp, diemgk=diem_gk, diemck=diem_ck, diemtong = diem_tong)
                             message = "Thêm điểm SV thành công."
+                            reload_page = True
                         else:
                             message = "Sinh viên đã có điểm ở môn này."
                 else:
                     message = "Sinh viên không tồn tại."
             else:
                 message = "Vui lòng chọn môn học tương ứng."
-            return JsonResponse({'message': message})
+            return JsonResponse({'message': message, 'reload_page': reload_page})
     else:
        # Lấy mã ngành từ query parameters
         selected_department = request.GET.get('department')
