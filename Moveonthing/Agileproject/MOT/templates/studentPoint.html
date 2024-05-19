@@ -176,12 +176,12 @@
             $('.popupFormContent').submit(function(event) {
                 event.preventDefault(); // Ngăn chặn hành động mặc định của form
                 var formData = $(this).serialize(); // Lấy dữ liệu từ form
-
                 // Gửi request POST đến server
                 $.post('', formData, function(data) {
                     // Hiển thị thông điệp từ server
                     alert(data.message);
                 });
+                
             });
         });
 

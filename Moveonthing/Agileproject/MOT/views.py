@@ -175,7 +175,7 @@ def select_subject(request):
                             diem.diemgk = diem_gk
                             diem.diemck = diem_ck
                             diem.diemtong = diem_tong
-                            diem.save()
+                            diem.save_base(force_update=is_update)
                             message = "Cập nhật điểm SV thành công."
                         else:
                             message = "Không tìm thấy điểm của sinh viên để cập nhật."
