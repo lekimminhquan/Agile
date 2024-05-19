@@ -181,6 +181,9 @@
                 $.post('', formData, function(data) {
                     // Hiển thị thông điệp từ server
                     alert(data.message);
+                    if (data.reload_page) {
+                        location.reload(); // Reload the page if required
+                    }
                 });
             });
         });
@@ -218,6 +221,7 @@
                 instruction.style.display = 'block';
             }
         }
+        
     </script>
 </body>
 </html>
