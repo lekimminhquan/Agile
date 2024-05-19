@@ -98,7 +98,19 @@
                         <button id="submitUpdatePopup" type="submit">Submit</button>
                     </form>
                 </div>
-                
+                <div id="popdel" class="modal" tabindex="-1" role="dialog" style ="position: absolute; top: 400px ; left:900px ;visibility: hidden;">
+                    <div class="modal-dialog" role="document" style="border: 1px solid black">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Xóa sinh viên ra khỏi lớp</h5>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="nuttat" onclick="tat()">Close</button>
+                          <button type="button" class="btn btn-primary" id="nutsave">Save changes</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 <h2 class="tlt-table">{% for subject in subjects %}
                     {% if subject.mahp == selected_subject %}
                         <h2 name="mahp" value="{{subject.mahp}}" class="titlee">DANH SÁCH ĐIỂM SINH VIÊN MÔN "{{ subject.tenhp | upper }}" NĂM HỌC 2023-2024</h2>
@@ -133,7 +145,7 @@
                                 </button>
                                 {% for subject in subjects %}
                                     {% if subject.mahp == selected_subject %}
-                                <a href="studentPoint/xoadiem/{{student.mssv}}/{{subject.mahp}}" onclick="thongbao()"><i class="fa fa-trash"></i></a>
+                                <button onclick="thongbao('{{student.mssv}}','{{subject.mahp}}')"><i class="fa fa-trash"></i></button>
                                     {% endif %}
                                 {%endfor%}
                             </td>
@@ -148,10 +160,27 @@
     </div>
     
     <script>
-        function thongbao(){
-                setTimeout(()=>{
-                    alert('Đã xóa thành công ')
-                },2000)
+        function tat(){
+            const pop = document.getElementById('popdel')
+            pop.style.visibility='hidden'
+        }
+        function thongbao(mssv,mahp)
+        {
+            const pop = document.getElementById('popdel')
+            pop.style.visibility ='inherit';
+            const nut = document.getElementById('nutsave')
+            nut.addEventListener('click',()=>{
+                fetch(`studentPoint/xoadiem/${mssv}/${mahp}`,{
+                method:'GET',
+                headers: {
+                    "Content-Type": "application/json",
+                }
+                })
+                alert('Đã xóa thành công')
+               location.reload()
+                
+            })           
+              
         }
         
         function openForm(formId, mssv = '', hotensv = '', malop = '', diem_gk = '', diem_ck = '', diem_tong = '') {
