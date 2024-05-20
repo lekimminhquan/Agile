@@ -65,7 +65,7 @@
                         <span class="close" onclick="closeForm('addForm')">&times;</span>
                         <label for="add_mssv">Mã số sinh viên:</label>
                         <input type="text" id="add_mssv" name="mssv" required>
-                        <label for="add_mssv">Tên lớp học phần :</label>
+                        <label for="add_tenlophp">Tên lớp học phần :</label>
                         <input type="text" id="add_tenlophp" name="tenlophp" required>
                         <label for="add_diem_gk">Điểm GK:</label>
                         <input type="number" id="add_diem_gk" name="diem_gk" min="0" max="10" step="0.01" required>
@@ -85,6 +85,8 @@
                         <input type="hidden" name="selected_subject" value="{{ selected_subject }}">
                         <input type="hidden" name="is_update" value="true">
                         <span class="close" onclick="closeForm('updateForm')">&times;</span>
+                        <label for="update_tenlophp">Tên lớp học phần:</label>
+                        <input type="text" id="update_tenlophp" name="tenlophp" readonly required>
                         <label for="update_mssv">Mã số sinh viên:</label>
                         <input type="text" id="update_mssv" name="mssv" readonly required>
                         <label for="update_hotensv">Họ và Tên:</label>
@@ -147,7 +149,7 @@
                             <td>{{ student.diem_ck }}</td>
                             <td>{{ student.diem_tong }}</td> <!-- Hiển thị điểm tổng -->
                             <td>
-                                <button onclick="openForm('updateForm', '{{ student.mssv }}', '{{ student.hotensv }}', '{{ student.malop }}', '{{ student.diem_gk }}', '{{ student.diem_ck }}', '{{ student.diem_tong }}')" class="update-button">
+                                <button onclick="openForm('updateForm', '{{ student.tenlophp }}', '{{ student.mssv }}', '{{ student.hotensv }}', '{{ student.malop }}', '{{ student.diem_gk }}', '{{ student.diem_ck }}', '{{ student.diem_tong }}')" class="update-button">
                                     <i class="fa fa-edit"></i>
                                 </button>
                                 {% for subject in subjects %}
@@ -190,10 +192,11 @@
               
         }
         
-        function openForm(formId, mssv = '', hotensv = '', malop = '', diem_gk = '', diem_ck = '', diem_tong = '') {
+        function openForm(formId, tenlophp = '', mssv = '', hotensv = '', malop = '', diem_gk = '', diem_ck = '', diem_tong = '') {
             document.getElementById(formId).style.display = "block";
 
             if (formId === 'updateForm') {
+                document.getElementById('update_tenlophp').value = tenlophp;
                 document.getElementById('update_mssv').value = mssv;
                 document.getElementById('update_hotensv').value = hotensv;
                 document.getElementById('update_malop').value = malop;

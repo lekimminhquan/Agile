@@ -157,8 +157,8 @@ def select_subject(request):
     if request.method == 'POST':
         # Kiểm tra nếu request là từ form pop-up
         if 'popup_form' in request.POST:
+            tenlophp = request.POST.get('tenlophp')
             mssv = request.POST.get('mssv')
-            tenlop = request.POST.get('tenlophp')
             diem_gk = float(request.POST.get('diem_gk'))
             diem_ck = float(request.POST.get('diem_ck'))
             diem_tong = float(request.POST.get('diem_tong'))
@@ -186,7 +186,7 @@ def select_subject(request):
                         # Kiểm tra xem sinh viên đã có điểm ở môn này chưa
                         if not Diem.objects.filter(mssv=sinhvien, mahp_id=mahp).exists():
                             # Thêm điểm mới vào CSDL
-                            new_diem = Diem.objects.create(mssv=sinhvien,tenlophp=tenlop ,mahp_id=mahp, diemgk=diem_gk, diemck=diem_ck, diemtong = diem_tong)
+                            new_diem = Diem.objects.create(mssv=sinhvien, mahp_id=mahp, diemgk=diem_gk, diemck=diem_ck, diemtong = diem_tong, tenlophp=tenlophp)
                             message = "Thêm điểm SV thành công."
                             reload_page = True
                         else:
@@ -216,12 +216,12 @@ def select_subject(request):
                 student_list = []
                 for student in students:
                     diem = Diem.objects.filter(mssv=student.mssv, mahp=mahp).first()
-                    tenlop = diem.tenlophp
+                    tenlophp = diem.tenlophp
                     diem_gk = diem.diemgk if diem else 0
                     diem_ck = diem.diemck if diem else 0
                     diem_tong = diem.diemtong if diem else 0
                     student_list.append({
-                        'tenlophp' : tenlop,
+                        'tenlophp' : tenlophp,
                         'mssv': student.mssv,
                         'hotensv': student.hotensv,
                         'malop': student.malop,
